@@ -1,6 +1,7 @@
 # Título del trabajo
-
-Descripción breve del proyecto a realizar (2-3 frases).
+Cámara térmica
+## Descripción del trabajo
+El objetivo del trabajo es crear una cámara térmica que mediante unos sensores analice la temperatura de distintos objetos y muestre en una pantalla un mapa térmico de los objetos con los datos obtenidos.
 
 ## Integrantes del equipo
 
