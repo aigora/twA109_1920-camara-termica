@@ -2,7 +2,7 @@
 Cámara térmica
 
 ## Integrantes del equipo
-Ismael Torrijano Pedroche, Iris Martínez Pérez, Irene Valdés Miguel
+Ismael Torrijano Pedroche,  Iris Martínez Pérez,  Irene Valdés Miguel
 
 ## Descripción del trabajo
 Este trabajo consiste en crear una cámara térmica que mediante unos sensores analice la temperatura de distintos objetos y muestre en una pantalla un mapa térmico de los objetos con los datos obtenidos.
