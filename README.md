@@ -8,7 +8,17 @@ Ismael Torrijano Pedroche,  Iris Martínez Pérez,  Irene Valdés Miguel
 Este trabajo consiste en crear una cámara térmica que mediante unos sensores analice la temperatura de distintos objetos y muestre en una pantalla un mapa térmico de los objetos con los datos obtenidos.
 
 ## Diagrama, gráfico o imagen que represente el sistema y sus interacciones
-*Consultar Wiki*
+
+
+
+
+
+
+
+
+
+
+
 ## Objetivos del trabajo
 El objetivo principal del trabajo es crear desde cero un sistema electrónico que aúne dos partes consistentes en software y hardware cuyo funcionamiento consista en leer datos del exterior y realizar acciones mediante el hardware que serán mostradas. Todo esto servirá para afianzar nuestros conocimientos de lenguaje de programación y componentes electrónicos.
 
