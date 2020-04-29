@@ -1,22 +1,20 @@
 # Título del trabajo
-Cámara térmica
+Cross the Road
 
 ## Integrantes del equipo
 Ismael Torrijano Pedroche,  Iris Martínez Pérez,  Irene Valdés Miguel
 
 ## Descripción del trabajo
-Este trabajo consiste en crear una cámara térmica que mediante unos sensores analice la temperatura de distintos objetos y muestre en una pantalla un mapa térmico de los objetos con los datos obtenidos.
+Este trabajo consiste en crear una videojuego  interactivo mediante la herramienta de programación C. El videojueo será una carretra o camino tumbado (en horizontal) por donde el jugador deberá controlar al personaje que ira esquivando los diversos obstáculos que hay en la carretera hasta cruzarla. Si el jugador choca contra un obstáculo o cruza la carretera se reinicia el juego.
 
 ## Diagrama, gráfico o imagen que represente el sistema y sus interacciones
-https://drive.google.com/open?id=178IojvigQfyatchSS7dBNb-8NxDxruqq
+
 ## Objetivos del trabajo
-El objetivo principal del trabajo es crear desde cero un sistema electrónico que aúne dos partes consistentes en software y hardware cuyo funcionamiento consista en leer datos del exterior y realizar acciones mediante el hardware que serán mostradas. Todo esto servirá para afianzar nuestros conocimientos de lenguaje de programación y componentes electrónicos.
+El objetivo principal del trabajo es crear desde cero un programa mediante la herramienta de C.Este trabajo solo requerirá de software, y su funcionamiento consista en leer datos del programa y realizar acciones que serán mostradas en pantalla a modo de videojuego. Todo esto servirá para afianzar nuestros conocimientos de lenguaje de programación.
 
 ## Elementos hardware previstos
-Los sensores de temperatura,
-Una pantalla donde reproducir una imagen ya que queremos que estos sensores reproduzcan una foto como si se tratase de una cámara térmica.
-Distintos servomotores para mover la estrucitura donde se encuentran los sensores. 
-Una placa de arduino para poder conectas los sensores los servos etc.
-
+Pantalla de ordenador, que servirá para mostrar la informacion del videojuego;
+Ratón, para iniciar y cerrar el juego (ademas de ajustes adicionales);
+Teclado, para controlar el videojuego.
 ## Tecnologías y herramientas software previstas
-En un principio utilizaremos lenguaje c, con arduino pero debemos de buscar algún otro programa para poder producir imágenes
+Lenguaje de programaxión C ( abierto a cambios)
