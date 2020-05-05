@@ -4,7 +4,7 @@
 #include <stdlib.h> 
 #include <windows.h> 
 #include <time.h>
-#define FILAS 22
+#define FILAS 26
 
 typedef struct
 {
@@ -30,7 +30,7 @@ pieza mover_pieza (pieza,int);
 tiempo incializar_tiempo (void);
 int superado_tiempo(tiempo);
 
-// FunciÛn principal 
+// Funci√≥n principal 
 int    main(void)
 {
 	 pieza p;
@@ -103,7 +103,7 @@ void borrar_pieza (pieza p)
 }
 
  
-void gotoxy (int x,int y )  //Intercambia el orden habitual, ya que la ìxî identifica la columna, mientras la coordenada ìyî representa la fila
+void gotoxy (int x,int y )  //Intercambia el orden habitual, ya que la ‚Äúx‚Äù identifica la columna, mientras la coordenada ‚Äúy‚Äù representa la fila
 {
 	HANDLE hcon;      
 	hcon = GetStdHandle(STD_OUTPUT_HANDLE);
