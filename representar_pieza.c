@@ -83,7 +83,7 @@ pieza inicializar_pieza (void)
 	pieza p;
 	p.simbolo= '*';
 	p.fila = 0;
-	p.columna=30; //En la mitad de la pantalla;
+	p.columna=60; //En la mitad de la pantalla;
 	
 	return p;
 }
