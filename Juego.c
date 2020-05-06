@@ -3,7 +3,7 @@
 #include <windows.h> 
 #include <time.h>
 #include<conio.h >
-
+#include <iostream>
 #define ARRIBA 72
 #define IZQUIERDA 75
 #define DERECHA 77
@@ -37,19 +37,31 @@ void gotoxy(int x,int y){
 //Funcion para dibujar los limites del juego
 void pintar_limites(){
 	int i;
+		
 	for(i=2;i<148;i++){
-		gotoxy(i,1);printf("%c",205);
+		gotoxy(i,0);printf("%c",205);
 		gotoxy(i,35);printf("%c",205);
+		gotoxy(i,16);printf("%c",207);
+    	gotoxy(i,18);printf("%c",207);
+    	gotoxy(i,26);printf("%c",196);
+    	gotoxy(i,8);printf("%c",196);
+    	gotoxy(i,4);printf("%c",'-');
+    	gotoxy(i,12);printf("%c",'-');
+    	gotoxy(i,22);printf("%c",'-');
+    	gotoxy(i,30);printf("%c",'-');
+    	
 	}
-	for(i=2;i<35;i++){
+	for(i=1;i<35;i++){
 		gotoxy(1,i);printf("%c",186);
 		gotoxy(148,i);printf("%c",186);
 	}
-	gotoxy(1,1);printf("%c",201);
+	gotoxy(1,0);printf("%c",201);
 	gotoxy(1,35);printf("%c",200);
-	gotoxy(148,1);printf("%c",187);
+	gotoxy(148,0);printf("%c",187);
 	gotoxy(148,35);printf("%c",188);
-
+	gotoxy(74,17);printf("SAFE ZONE");
+   
+	
 }
 
 //Conjunto de funciones para programar y manejar al jugador
@@ -66,28 +78,49 @@ public:
 };
 
 void JUGADOR::pintar(){ //Funcion para dibujar al jugador
-	gotoxy(x,y); printf("  %c",111);
-	gotoxy(x,y+1); printf(" %c%c%c",45,124,45);
-	gotoxy(x,y+2);printf(" %c %c",47,92);
+	gotoxy(x,y); printf("  %c%c%c",62,229,60);
+
+
 }
 
 void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el jugador y dar la sensacion de movimiento
 	gotoxy(x,y); printf ("     ");
-	gotoxy(x,y+1); printf ("     ");
-	gotoxy(x,y+2); printf ("     ");
+	
+	
 }
 
 
  void JUGADOR::mover(){ //Funcion para mover al jugador
+ int i;
  		if(kbhit()){
 				char tecla = getch();
 				borrar();
 				if(tecla == IZQUIERDA && x>3 )x=x-2;
-				if(tecla == DERECHA && x+6 < 149 )x=x+2;
-				if(tecla == ABAJO && y+3< 35)y++;
-				if(tecla == ARRIBA && y>2)y--;
+				if(tecla == DERECHA && x+4 < 147 )x=x+2;
+				if(tecla == ABAJO && y< 34)y++;
+				if(tecla == ARRIBA && y>1)y--;
+			    if(tecla==ARRIBA && y==16 )y--;
+				if(tecla==ARRIBA && y==18 )y--;
+				if(tecla==ABAJO&& y==16 )y++;
+				if(tecla==ABAJO && y==18 )y++;
+				if(tecla==ARRIBA && y==4 )y--;
+				if(tecla==ABAJO && y==4 )y++;
+				if(tecla==ARRIBA && y==8 )y--;
+				if(tecla==ABAJO && y==8 )y++;
+				if(tecla==ARRIBA && y==12 )y--;
+				if(tecla==ABAJO && y==12 )y++;
+				if(tecla==ARRIBA && y==22 )y--;
+				if(tecla==ABAJO && y==22 )y++;
+				if(tecla==ARRIBA && y==26 )y--;
+				if(tecla==ABAJO && y==26 )y++;
+				if(tecla==ARRIBA && y==30 )y--;
+				if(tecla==ABAJO && y==30 )y++;
 				pintar();
+				
 			}
+		
+    
+			
  }
 //Funcion principal, donde se aplican las demas para ejecutar el programa
 int main (void){
@@ -95,7 +128,7 @@ int main (void){
 	
 	OcultarCursor(); 
 	pintar_limites();
-	JUGADOR J(75,32);
+	JUGADOR J(75,34);
 	J.pintar();
 	
 	bool game_over = false;
