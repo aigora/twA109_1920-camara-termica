@@ -125,7 +125,7 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 //Funcion principal, donde se aplican las demas para ejecutar el programa
 int main (void){
 	
-	
+	system("COLOR 02")
 	OcultarCursor(); 
 	pintar_limites();
 	JUGADOR J(75,34);
