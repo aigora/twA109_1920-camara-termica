@@ -5,7 +5,7 @@ Cross the Road
 Ismael Torrijano Pedroche,  Iris Martínez Pérez,  Irene Valdés Miguel
 
 ## Descripción del trabajo
-Este trabajo consiste en crear una videojuego  interactivo mediante la herramienta de programación C. El videojueo será una carretra o camino tumbado (en horizontal) por donde el jugador deberá controlar al personaje que ira esquivando los diversos obstáculos que hay en la carretera hasta cruzarla. Si el jugador choca contra un obstáculo o cruza la carretera se reinicia el juego.
+Este trabajo consiste en crear una videojuego  interactivo mediante la herramienta de programación C. El videojuego será una carretera o camino tumbado (en horizontal) por donde el jugador deberá controlar al personaje que ira esquivando los diversos obstáculos que hay en la carretera hasta cruzarla. Si el jugador choca contra un obstáculo o cruza la carretera se reinicia el juego.
 
 ## Diagrama, gráfico o imagen que represente el sistema y sus interacciones
 
@@ -17,4 +17,4 @@ Pantalla de ordenador, que servirá para mostrar la informacion del videojuego;
 Ratón, para iniciar y cerrar el juego (ademas de ajustes adicionales);
 Teclado, para controlar el videojuego.
 ## Tecnologías y herramientas software previstas
-Lenguaje de programaxión C ( abierto a cambios)
+Lenguaje de programación C ( abierto a cambios)
