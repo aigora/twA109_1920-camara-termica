@@ -17,4 +17,4 @@ Pantalla de ordenador, que servirá para mostrar la informacion del videojuego;
 Ratón, para iniciar y cerrar el juego (ademas de ajustes adicionales);
 Teclado, para controlar el videojuego.
 ## Tecnologías y herramientas software previstas
-Lenguaje de programación C ( abierto a cambios)
+Lenguaje de programación C++ ( abierto a cambios)
