@@ -3,7 +3,6 @@
 #include <windows.h> 
 #include <time.h>
 #include<conio.h >
-#include <iostream>
 #define ARRIBA 72
 #define IZQUIERDA 75
 #define DERECHA 77
@@ -122,19 +121,66 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
     
 			
  }
+ 
+ 
+ class COCHE{
+ 	int x,y;
+public:
+	COCHE(int_x,int_y):x(_x),y(_y){}
+	void pintar():
+	void mover();
+ };
+ 
+ void COCHE::pintar(){
+ 	gotoxy(x,y):printf("%c,184");
+ }
+ 
+ void COCHE::mover(){
+ 	gotoxy(x,y):printf("%c",184);
+ 	x++;
+ 	if(x > 147){
+ 		y=rand()%71 +4//Nos da un numero entre 0 y 71+4
+	 }
+	 pintar():
+ }
+ 
+ class COCHE{
+ 	int x,y;
+public:
+	COCHE(int _x,int _y):x(_x),y(_y){}
+	void pintar();
+	void mover();
+ };
+ 
+ void COCHE::pintar(){
+ 	gotoxy(x,y); 
+	printf("-");
+ }
+ 
+ void COCHE::mover(){
+ 	gotoxy(x,y);
+	printf("%c",184);
+ 	x++;
+ 	if(x > 147){
+ 		y=rand()%71 +4;//Nos da un numero entre
+	 }
+	 pintar();
+ }
 //Funcion principal, donde se aplican las demas para ejecutar el programa
 int main (void){
 	
-	system("COLOR 02")
+	system("COLOR 02");
 	OcultarCursor(); 
 	pintar_limites();
 	JUGADOR J(75,34);
 	J.pintar();
 	
+	COCHE coche(10,4);
+	
 	bool game_over = false;
 	while (!game_over){
 		
-		
+		    coche.mover();
 			J.mover();
 			Sleep(30);
 	}
