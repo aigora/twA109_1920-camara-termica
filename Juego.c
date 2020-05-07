@@ -3,6 +3,7 @@
 #include <windows.h> 
 #include <time.h>
 #include<conio.h >
+#include <iostream>
 #define ARRIBA 72
 #define IZQUIERDA 75
 #define DERECHA 77
@@ -122,50 +123,93 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 			
  }
  
- 
- class COCHE{
- 	int x,y;
+ class COCHES1{
+	int x,x1=47,x2=94,y;		
 public:
-	COCHE(int_x,int_y):x(_x),y(_y){}
-	void pintar():
-	void mover();
- };
- 
- void COCHE::pintar(){
- 	gotoxy(x,y):printf("%c,184");
- }
- 
- void COCHE::mover(){
- 	gotoxy(x,y):printf("%c",184);
- 	x++;
- 	if(x > 147){
- 		y=rand()%71 +4//Nos da un numero entre 0 y 71+4
-	 }
-	 pintar():
- }
- 
- class COCHE{
- 	int x,y;
-public:
-	COCHE(int _x,int _y):x(_x),y(_y){}
+	COCHES1(int _x,int _y):x(_x),y(_y){}	
 	void pintar();
-	void mover();
- };
+	void borrar();
+	void mover(); 
+	
+};
+void COCHES1::pintar(){ //Funcion para dibujar el coche
+	gotoxy(x,y); printf("   %c%c%c",254,254,254);
+	gotoxy(x1,y); printf("   %c%c%c",254,254,254);
+	gotoxy(x2,y); printf("   %c%c%c",254,254,254);	
+}
+void COCHES1::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el coche y dar la sensacion de movimiento
+	gotoxy(x,y); printf ("     ");	
+	gotoxy(x1,y); printf ("     ");	
+	gotoxy(x2,y); printf ("     ");			
+}
+void COCHES1::mover(){
+	x++;
+	if(x>142){
+		borrar();
+		y=2;
+		x=2;
+	}	
+	x1++;
+	if(x1>142){
+		borrar();
+		y=2;
+		x1=2;
+	}	
+	x2++;
+	if(x2>142){
+		borrar();
+		y=2;
+		x2=2;
+	}	
+	pintar();	
+}
+
+ class COCHES2{
+	int x=25,x1=70,x2=120,y;
+		
+public:
+	COCHES2(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover(); 
+	
+};
+void COCHES2::pintar(){ //Funcion para dibujar el coche
+	gotoxy(x,y); printf("   %c%c%c",254,254,254);
+	gotoxy(x1,y); printf("   %c%c%c",254,254,254);
+	gotoxy(x2,y); printf("   %c%c%c",254,254,254);	
+}
+
+void COCHES2::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el coche y dar la sensacion de movimiento
+	gotoxy(x,y); printf ("     ");	
+	gotoxy(x1,y); printf ("     ");	
+	gotoxy(x2,y); printf ("     ");			
+}
+
+void COCHES2::mover(){
+	x++;
+	if(x>142){
+		borrar();
+		y=3;
+		x=2;
+	}	
+
+	x1++;
+	if(x1>142){
+		borrar();
+		y=3;
+		x1=2;
+	}	
+	x2++;
+	if(x2>142){
+		borrar();
+		y=3;
+		x2=2;
+	}	
+
+	pintar();	
+}
  
- void COCHE::pintar(){
- 	gotoxy(x,y); 
-	printf("-");
- }
- 
- void COCHE::mover(){
- 	gotoxy(x,y);
-	printf("%c",184);
- 	x++;
- 	if(x > 147){
- 		y=rand()%71 +4;//Nos da un numero entre
-	 }
-	 pintar();
- }
 //Funcion principal, donde se aplican las demas para ejecutar el programa
 int main (void){
 	
@@ -174,14 +218,16 @@ int main (void){
 	pintar_limites();
 	JUGADOR J(75,34);
 	J.pintar();
-	
-	COCHE coche(10,4);
+	COCHES1 C1(2,2);
+	COCHES2 C2(25,3);
 	
 	bool game_over = false;
 	while (!game_over){
 		
-		    coche.mover();
+		
 			J.mover();
+			C1.mover();
+			C2.mover();			
 			Sleep(30);
 	}
 	return 0;
