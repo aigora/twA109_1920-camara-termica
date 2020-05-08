@@ -227,27 +227,27 @@ void COCHES3::pintar(){ //Funcion para dibujar el coche
 }
 
 void COCHES3::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el coche y dar la sensacion de movimiento
-	gotoxy(x,y); printf ("           ");	
-	gotoxy(x1,y); printf ("           ");	
-	gotoxy(x2,y); printf ("           ");			
+	gotoxy(x,y); printf ("      ");	
+	gotoxy(x1,y); printf ("      ");	
+	gotoxy(x2,y); printf ("      ");				
 }
 
 void COCHES3::mover(){
 	x++;
-	if(x>142){
+	if(x>141){
 		borrar();
 		y=7;
 		x=2;
 	}	
 
 	x1++;
-	if(x1>142){
+	if(x1>141){
 		borrar();
 		y=7;
 		x1=2;
 	}	
 	x2++;
-	if(x2>142){
+	if(x2>141){
 		borrar();
 		y=7;
 		x2=2;
