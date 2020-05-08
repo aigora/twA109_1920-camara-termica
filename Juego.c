@@ -209,6 +209,52 @@ void COCHES2::mover(){
 
 	pintar();	
 }
+
+class COCHES3{
+	int x=50,x1=80,x2=120,y;
+		
+public:
+	COCHES3(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover(); 
+	
+};
+void COCHES3::pintar(){ //Funcion para dibujar el coche
+	gotoxy(x,y); printf("   %c%c%c%c",111,45,111,217);
+	gotoxy(x1,y); printf("   %c%c%c%c",111,45,111,217);
+	gotoxy(x2,y); printf("   %c%c%c%c",111,45,111,217);
+}
+
+void COCHES3::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el coche y dar la sensacion de movimiento
+	gotoxy(x,y); printf ("           ");	
+	gotoxy(x1,y); printf ("           ");	
+	gotoxy(x2,y); printf ("           ");			
+}
+
+void COCHES3::mover(){
+	x++;
+	if(x>142){
+		borrar();
+		y=7;
+		x=2;
+	}	
+
+	x1++;
+	if(x1>142){
+		borrar();
+		y=7;
+		x1=2;
+	}	
+	x2++;
+	if(x2>142){
+		borrar();
+		y=7;
+		x2=2;
+	}	
+
+	pintar();	
+}
  
 //Funcion principal, donde se aplican las demas para ejecutar el programa
 int main (void){
@@ -220,6 +266,7 @@ int main (void){
 	J.pintar();
 	COCHES1 C1(2,2);
 	COCHES2 C2(25,3);
+	COCHES3 C3(50,7);
 	
 	bool game_over = false;
 	while (!game_over){
@@ -227,7 +274,8 @@ int main (void){
 		
 			J.mover();
 			C1.mover();
-			C2.mover();			
+			C2.mover();
+			C3.mover();				
 			Sleep(30);
 	}
 	return 0;
