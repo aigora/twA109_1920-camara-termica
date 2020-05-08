@@ -174,13 +174,13 @@ public:
 	void mover(); 
 	
 };
-void COCHES2::pintar(){ //Funcion para dibujar el coche
+void COCHES2::pintar(){ 
 	gotoxy(x,y); printf("   %c%c%c",254,254,254);
 	gotoxy(x1,y); printf("   %c%c%c",254,254,254);
 	gotoxy(x2,y); printf("   %c%c%c",254,254,254);	
 }
 
-void COCHES2::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el coche y dar la sensacion de movimiento
+void COCHES2::borrar(){ 
 	gotoxy(x,y); printf ("     ");	
 	gotoxy(x1,y); printf ("     ");	
 	gotoxy(x2,y); printf ("     ");			
@@ -220,16 +220,16 @@ public:
 	void mover(); 
 	
 };
-void COCHES3::pintar(){ //Funcion para dibujar el coche
+void COCHES3::pintar(){ 
 	gotoxy(x,y); printf("   %c%c%c%c",111,45,111,217);
 	gotoxy(x1,y); printf("   %c%c%c%c",111,45,111,217);
 	gotoxy(x2,y); printf("   %c%c%c%c",111,45,111,217);
 }
 
-void COCHES3::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el coche y dar la sensacion de movimiento
+void COCHES3::borrar(){ 
 	gotoxy(x,y); printf ("      ");	
 	gotoxy(x1,y); printf ("      ");	
-	gotoxy(x2,y); printf ("      ");				
+	gotoxy(x2,y); printf ("      ");			
 }
 
 void COCHES3::mover(){
@@ -255,6 +255,69 @@ void COCHES3::mover(){
 
 	pintar();	
 }
+
+class GATO{
+	int x=10,x1=36,x2=64,x3=101,y;
+		
+public:
+	GATO(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover(); 
+	
+};
+void GATO::pintar(){ 
+	gotoxy(x,y); printf("   %c%c%c%c",47,92,47,92);
+	gotoxy(x,y-0.5); printf("    %c%c%c",95,95,48);	
+	gotoxy(x1,y); printf("   %c%c%c%c",47,92,47,92);
+	gotoxy(x1,y-0.5); printf("    %c%c%c",95,95,48);	
+	gotoxy(x2,y); printf("   %c%c%c%c",47,92,47,92);
+	gotoxy(x2,y-0.5);printf("    %c%c%c",95,95,48);	
+	gotoxy(x3,y); printf("   %c%c%c%c",47,92,47,92);
+	gotoxy(x3,y-0.5);printf("    %c%c%c",95,95,48);		
+}
+
+void GATO::borrar(){ 
+	gotoxy(x,y); printf("      ");
+	gotoxy(x,y-0.5); printf("      ");	
+	gotoxy(x1,y); printf("      ");
+	gotoxy(x1,y-0.5); printf("      ");
+	gotoxy(x2,y); printf("      ");
+	gotoxy(x2,y-0.5); printf("      ");	
+	gotoxy(x3,y); printf("      ");
+	gotoxy(x3,y-0.5); printf("      ");		
+}
+
+void GATO::mover(){
+	x++;
+	if(x>141){
+		borrar();
+		y=10;
+		x=2;
+	}	
+
+	x1++;
+	if(x1>141){
+		borrar();
+		y=10;
+		x1=2;
+	}	
+	x2++;
+	if(x2>141){
+		borrar();
+		y=10;
+		x2=2;
+	}	
+	x3++;
+	if(x3>141){
+		borrar();
+		y=10;
+		x3=2;
+	}
+	
+	pintar();	
+}
+
  
 //Funcion principal, donde se aplican las demas para ejecutar el programa
 int main (void){
@@ -267,6 +330,7 @@ int main (void){
 	COCHES1 C1(2,2);
 	COCHES2 C2(25,3);
 	COCHES3 C3(50,7);
+    GATO G(13,10);
 	
 	bool game_over = false;
 	while (!game_over){
@@ -275,8 +339,10 @@ int main (void){
 			J.mover();
 			C1.mover();
 			C2.mover();
-			C3.mover();				
+			C3.mover();	
+			G.mover();				
 			Sleep(30);
 	}
 	return 0;
 }
+
