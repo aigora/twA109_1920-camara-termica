@@ -267,52 +267,52 @@ public:
 	
 };
 void GATO::pintar(){ 
-	gotoxy(x,y); printf("   %c%c%c%c",47,92,47,92);
-	gotoxy(x,y-0.5); printf("    %c%c%c",95,95,48);	
-	gotoxy(x1,y); printf("   %c%c%c%c",47,92,47,92);
-	gotoxy(x1,y-0.5); printf("    %c%c%c",95,95,48);	
-	gotoxy(x2,y); printf("   %c%c%c%c",47,92,47,92);
-	gotoxy(x2,y-0.5);printf("    %c%c%c",95,95,48);	
-	gotoxy(x3,y); printf("   %c%c%c%c",47,92,47,92);
-	gotoxy(x3,y-0.5);printf("    %c%c%c",95,95,48);		
+	gotoxy(x,y); printf("%c%c%c%c ",47,92,47,92);
+	gotoxy(x,y-0.5); printf("%c%c%c ",48,95,95);	
+	gotoxy(x1,y); printf("%c%c%c%c ",47,92,47,92);
+	gotoxy(x1,y-0.5); printf("%c%c%c ",48,95,95);	
+	gotoxy(x2,y); printf("%c%c%c%c ",47,92,47,92);
+	gotoxy(x2,y-0.5);printf("%c%c%c ",48,95,95);	
+	gotoxy(x3,y); printf("%c%c%c%c ",47,92,47,92);
+	gotoxy(x3,y-0.5);printf("%c%c%c ",48,95,95);		
 }
 
-void GATO::borrar(){ 
-	gotoxy(x,y); printf("      ");
-	gotoxy(x,y-0.5); printf("      ");	
-	gotoxy(x1,y); printf("      ");
-	gotoxy(x1,y-0.5); printf("      ");
-	gotoxy(x2,y); printf("      ");
-	gotoxy(x2,y-0.5); printf("      ");	
-	gotoxy(x3,y); printf("      ");
-	gotoxy(x3,y-0.5); printf("      ");		
+void GATO::borrar(){
+	gotoxy(x,y); printf("        ");
+	gotoxy(x,y-0.5); printf("        ");	
+	gotoxy(x1,y); printf("        ");
+	gotoxy(x1,y-0.5); printf("        ");
+	gotoxy(x2,y); printf("        ");
+	gotoxy(x2,y-0.5); printf("        ");	
+	gotoxy(x3,y); printf("        ");
+	gotoxy(x3,y-0.5); printf("        ");		
 }
 
 void GATO::mover(){
-	x++;
-	if(x>141){
+	x--;
+	if(x<3){
 		borrar();
 		y=10;
-		x=2;
+		x=143;
 	}	
 
-	x1++;
-	if(x1>141){
+	x1--;
+	if(x1<3){
 		borrar();
 		y=10;
-		x1=2;
+		x1=143;
 	}	
-	x2++;
-	if(x2>141){
+	x2--;
+	if(x2<3){
 		borrar();
 		y=10;
-		x2=2;
+		x2=143;
 	}	
-	x3++;
-	if(x3>141){
+	x3--;
+	if(x3<3){
 		borrar();
 		y=10;
-		x3=2;
+		x3=143;
 	}
 	
 	pintar();	
