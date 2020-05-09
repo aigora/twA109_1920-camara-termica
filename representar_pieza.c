@@ -1,237 +1,135 @@
+
+// Representar pieza
+
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <windows.h> 
 #include <time.h>
-#include<conio.h >
-#include <iostream>
-#define ARRIBA 72
-#define IZQUIERDA 75
-#define DERECHA 77
-#define ABAJO 80 
+#define FILAS 26
+
+typedef struct
+{
+	char simbolo;
+	int fila,columna;
+}pieza;
+
+typedef struct
+{
+	clock_t inicio,actual;
+	double segundos;
+	double intervalo;
+}tiempo;
+
+// Funciones prototipo. 
+void gotoxy(int, int);
+
+pieza inicializar_pieza(void);
+void dibujar_pieza (pieza);
+void borrar_pieza (pieza p);
+pieza mover_pieza (pieza,int);
+
+tiempo incializar_tiempo (void);
+int superado_tiempo(tiempo);
+
+// Función principal 
+int    main(void)
+{
+	 pieza p;
+	 p=inicializar_pieza();
+	 char tecla;
+	 
+	 clock_t t_inicio,t_actual; //Medidas del tiempo
+	 double segundos;
+	 
+
+	 t_inicio= clock ();
+	 
+	 dibujar_pieza(p);
+	 while (p.fila<FILAS)
+	 {
+	 	t_actual = clock();  //Tiempo inicial
+	 	
+	 	segundos= (double)(t_actual-t_inicio)/CLOCKS_PER_SEC;
+	 	
+	 	if (segundos>0.2)
+	 	{   //Movemos la pieza
+	 		p =mover_pieza (p,'v');
+	 	    t_inicio = clock(); //Restauramos el tiempo
+	 		
+		 }	
+		 
+		 if (kbhit()==1) //Si se ha pulsado una tecla
+		 {
+		 	tecla=getch(stdin); //Nos devuelve la tecla
+		 	switch (tecla)
+		 	{
+		 		case 'm': p=mover_pieza(p,'>'); //Movemos  derecha y actualizamos columna
+		 		          break;
+		 		case 'n': p=mover_pieza(p,'<');//Movemos izquierda y actualizamos colimna
+		 		          break;
+			 }
+		 }
+	 	
+	
+	 }
+	 
+	 printf ("\n");
+	 return 0;
+}
+
+
+// Funciones
+pieza inicializar_pieza (void)
+{
+	pieza p;
+	p.simbolo= '*';
+	p.fila = 0;
+	p.columna=60; //En la mitad de la pantalla;
+	
+	return p;
+}
+
+
+void dibujar_pieza (pieza p)
+{
+	gotoxy(p.columna,p.fila);
+	printf("%c",p.simbolo);
+}
+
+
+void borrar_pieza (pieza p)
+{
+	gotoxy(p.columna,p.fila);
+	printf(" ");	
+}
+
  
-
-
-// Funcion para situarse en algun punto del plano
-void gotoxy(int x,int y){
-	HANDLE hCon;
-	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD dwPos;
+void gotoxy (int x,int y )  //Intercambia el orden habitual, ya que la “x” identifica la columna, mientras la coordenada “y” representa la fila
+{
+	HANDLE hcon;      
+	hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD dwPos;     
 	dwPos.X = x;
-	dwPos.Y = y;
-	
-	SetConsoleCursorPosition (hCon, dwPos);
+	dwPos.Y= y;      
+	SetConsoleCursorPosition(hcon,dwPos);
 }
 
-//Funcion para ocultar el cursor
- void OcultarCursor(){
- 	HANDLE hCon;
-	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_CURSOR_INFO cci;
-	cci.dwSize = 2;
-	cci.bVisible = FALSE;
+
+pieza  mover_pieza (pieza p, int direccion) //Mover la pieza 
+{
+	borrar_pieza (p);
 	
-	
-	SetConsoleCursorInfo(hCon,&cci);
- 	
- }
-//Funcion para dibujar los limites del juego
-void pintar_limites(){
-	int i;
-		
-	for(i=2;i<148;i++){
-		gotoxy(i,0);printf("%c",205);
-		gotoxy(i,35);printf("%c",205);
-		gotoxy(i,16);printf("%c",207);
-    	gotoxy(i,18);printf("%c",207);
-    	gotoxy(i,26);printf("%c",196);
-    	gotoxy(i,8);printf("%c",196);
-    	gotoxy(i,4);printf("%c",'-');
-    	gotoxy(i,12);printf("%c",'-');
-    	gotoxy(i,22);printf("%c",'-');
-    	gotoxy(i,30);printf("%c",'-');
-    	
+	switch (direccion)
+	{
+		case 'v': p.fila ++;
+		          break;
+		case '>': p.columna++;
+		          break;
+		case '<': p.columna--;
+		          break;
 	}
-	for(i=1;i<35;i++){
-		gotoxy(1,i);printf("%c",186);
-		gotoxy(148,i);printf("%c",186);
-	}
-	gotoxy(1,0);printf("%c",201);
-	gotoxy(1,35);printf("%c",200);
-	gotoxy(148,0);printf("%c",187);
-	gotoxy(148,35);printf("%c",188);
-	gotoxy(74,17);printf("SAFE ZONE");
-   
-	
+	dibujar_pieza(p);
+	return p;
 }
-
-//Conjunto de funciones para programar y manejar al jugador
-
-class JUGADOR{  //Funcion clase, que sirve de inicio
-	int x,y;
-	
-public:
-	JUGADOR(int _x,int _y):x(_x),y(_y){}
-	void pintar();
-	void borrar();
-	void mover(); 
-	
-};
-
-void JUGADOR::pintar(){ //Funcion para dibujar al jugador
-	gotoxy(x,y); printf("  %c%c%c",62,229,60);
-
-
-}
-
-void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el jugador y dar la sensacion de movimiento
-	gotoxy(x,y); printf ("     ");
-	
-	
-}
-
-
- void JUGADOR::mover(){ //Funcion para mover al jugador
- int i;
- 		if(kbhit()){
-				char tecla = getch();
-				borrar();
-				if(tecla == IZQUIERDA && x>3 )x=x-2;
-				if(tecla == DERECHA && x+4 < 147 )x=x+2;
-				if(tecla == ABAJO && y< 34)y++;
-				if(tecla == ARRIBA && y>1)y--;
-			    if(tecla==ARRIBA && y==16 )y--;
-				if(tecla==ARRIBA && y==18 )y--;
-				if(tecla==ABAJO&& y==16 )y++;
-				if(tecla==ABAJO && y==18 )y++;
-				if(tecla==ARRIBA && y==4 )y--;
-				if(tecla==ABAJO && y==4 )y++;
-				if(tecla==ARRIBA && y==8 )y--;
-				if(tecla==ABAJO && y==8 )y++;
-				if(tecla==ARRIBA && y==12 )y--;
-				if(tecla==ABAJO && y==12 )y++;
-				if(tecla==ARRIBA && y==22 )y--;
-				if(tecla==ABAJO && y==22 )y++;
-				if(tecla==ARRIBA && y==26 )y--;
-				if(tecla==ABAJO && y==26 )y++;
-				if(tecla==ARRIBA && y==30 )y--;
-				if(tecla==ABAJO && y==30 )y++;
-				pintar();
-				
-			}
-		
-    
-			
- }
- 
- class COCHES1{
-	int x,x1=47,x2=94,y;		
-public:
-	COCHES1(int _x,int _y):x(_x),y(_y){}	
-	void pintar();
-	void borrar();
-	void mover(); 
-	
-};
-void COCHES1::pintar(){ //Funcion para dibujar el coche
-	gotoxy(x,y); printf("   %c%c%c",254,254,254);
-	gotoxy(x1,y); printf("   %c%c%c",254,254,254);
-	gotoxy(x2,y); printf("   %c%c%c",254,254,254);	
-}
-void COCHES1::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el coche y dar la sensacion de movimiento
-	gotoxy(x,y); printf ("     ");	
-	gotoxy(x1,y); printf ("     ");	
-	gotoxy(x2,y); printf ("     ");			
-}
-void COCHES1::mover(){
-	x++;
-	if(x>142){
-		borrar();
-		y=2;
-		x=2;
-	}	
-	x1++;
-	if(x1>142){
-		borrar();
-		y=2;
-		x1=2;
-	}	
-	x2++;
-	if(x2>142){
-		borrar();
-		y=2;
-		x2=2;
-	}	
-	pintar();	
-}
-
- class COCHES2{
-	int x=25,x1=70,x2=120,y;
-		
-public:
-	COCHES2(int _x,int _y):x(_x),y(_y){}	
-	void pintar();
-	void borrar();
-	void mover(); 
-	
-};
-void COCHES2::pintar(){ //Funcion para dibujar el coche
-	gotoxy(x,y); printf("   %c%c%c",254,254,254);
-	gotoxy(x1,y); printf("   %c%c%c",254,254,254);
-	gotoxy(x2,y); printf("   %c%c%c",254,254,254);	
-}
-
-void COCHES2::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el coche y dar la sensacion de movimiento
-	gotoxy(x,y); printf ("     ");	
-	gotoxy(x1,y); printf ("     ");	
-	gotoxy(x2,y); printf ("     ");			
-}
-
-void COCHES2::mover(){
-	x++;
-	if(x>142){
-		borrar();
-		y=3;
-		x=2;
-	}	
-
-	x1++;
-	if(x1>142){
-		borrar();
-		y=3;
-		x1=2;
-	}	
-	x2++;
-	if(x2>142){
-		borrar();
-		y=3;
-		x2=2;
-	}	
-
-	pintar();	
-}
- 
-//Funcion principal, donde se aplican las demas para ejecutar el programa
-int main (void){
-	
-	system("COLOR 02");
-	OcultarCursor(); 
-	pintar_limites();
-	JUGADOR J(75,34);
-	J.pintar();
-	COCHES1 C1(2,2);
-	COCHES2 C2(25,3);
-	
-	bool game_over = false;
-	while (!game_over){
-		
-		
-			J.mover();
-			C1.mover();
-			C2.mover();			
-			Sleep(30);
-	}
-	return 0;
-}
-
 
 
