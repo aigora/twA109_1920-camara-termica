@@ -51,17 +51,32 @@ void pintar_limites(){
     	gotoxy(i,30);printf("%c",'-');
     	
 	}
+	for(i=150;i<169;i++){
+		gotoxy(i,0);printf("%c",205);
+		gotoxy(i,35);printf("%c",205);
+		
+	}
 	for(i=1;i<35;i++){
 		gotoxy(1,i);printf("%c",186);
 		gotoxy(148,i);printf("%c",186);
+		gotoxy(149,i);printf("%c",186);
+		gotoxy(169,i);printf("%c",186);
 	}
 	gotoxy(1,0);printf("%c",201);
 	gotoxy(1,35);printf("%c",200);
 	gotoxy(148,0);printf("%c",187);
 	gotoxy(148,35);printf("%c",188);
+	gotoxy(149,0);printf("%c",201);
+	gotoxy(149,35);printf("%c",200);
+	gotoxy(169,0);printf("%c",187);
+	gotoxy(169,35);printf("%c",188);
 	gotoxy(74,17);printf("SAFE ZONE");
-   
-	
+	gotoxy(152,1);printf("CROSS THE ROAD!");
+	gotoxy(150,3);printf("Vidas:");
+	gotoxy(150,5);printf("Puntos:");
+	gotoxy(150,7);printf("Tiempo:");
+	gotoxy(150,9);printf("Monedas:");
+	   
 }
 
 //Conjunto de funciones para programar y manejar al jugador
@@ -345,4 +360,3 @@ int main (void){
 	}
 	return 0;
 }
-
