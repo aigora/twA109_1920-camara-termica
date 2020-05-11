@@ -52,7 +52,7 @@ void pintar_limites(){
     	gotoxy(i,30);printf("%c",'-');
     	
 	}
-	for(i=150;i<169;i++){
+	for(i=150;i<165;i++){
 		gotoxy(i,0);printf("%c",205);
 		gotoxy(i,35);printf("%c",205);
 		
@@ -61,7 +61,7 @@ void pintar_limites(){
 		gotoxy(1,i);printf("%c",186);
 		gotoxy(148,i);printf("%c",186);
 		gotoxy(149,i);printf("%c",186);
-		gotoxy(169,i);printf("%c",186);
+		gotoxy(165,i);printf("%c",186);
 	}
 	gotoxy(1,0);printf("%c",201);
 	gotoxy(1,35);printf("%c",200);
@@ -69,10 +69,10 @@ void pintar_limites(){
 	gotoxy(148,35);printf("%c",188);
 	gotoxy(149,0);printf("%c",201);
 	gotoxy(149,35);printf("%c",200);
-	gotoxy(169,0);printf("%c",187);
-	gotoxy(169,35);printf("%c",188);
+	gotoxy(165,0);printf("%c",187);
+	gotoxy(165,35);printf("%c",188);
 	gotoxy(74,17);printf("SAFE ZONE");
-	gotoxy(152,1);printf("CROSS THE ROAD!");
+	gotoxy(150,1);printf("CROSS THE ROAD!");
 	gotoxy(150,3);printf("Vidas:");
 	gotoxy(150,5);printf("Puntos:");
 	gotoxy(150,7);printf("Tiempo:");
@@ -293,7 +293,7 @@ void COCHES4::borrar(){
 
 void COCHES4::mover(){
 		x=x-2;
-	if(x<3){
+	if(x<4){
 		borrar();
 		y=5;
 		x=141;
