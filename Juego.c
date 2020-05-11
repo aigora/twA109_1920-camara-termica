@@ -283,8 +283,8 @@ public:
 	void mover();
 };
 void COCHES4::pintar(){
-	gotoxy(x,y); printf("    %c%c%c",254,254,254);
-	gotoxy(x1,y); printf("   %c%c%c",254,254,254);
+	gotoxy(x,y); printf("%c%c%c    ",254,254,254);
+	gotoxy(x1,y); printf("%c%c%c    ",254,254,254);
 }
 void COCHES4::borrar(){
 	gotoxy(x,y); printf ("     ");	
@@ -383,8 +383,8 @@ int main (void){
 	COCHES1 C1(2,2);
 	COCHES2 C2(25,3);
 	COCHES3 C3(50,7);
-//	COCHES4 C4(98,5);
-    GATO G(13,10);
+	COCHES4 C4(98,5);
+        GATO G(13,10);
 	
 	bool game_over = false;
 	while (!game_over){
@@ -394,7 +394,7 @@ int main (void){
 			C1.mover();
 			C2.mover();
 			C3.mover();	
-		//	C4.mover();
+			C4.mover();
 			G.mover();				
 			Sleep(30);
 	}
