@@ -308,6 +308,50 @@ void COCHES4::mover(){
 }
 	pintar();
 }
+//Funcion clase que controla el coche 5
+class COCHES5{
+	int x=95,x1=48,x2=25,y;
+	
+public: 
+	COCHES5(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover();
+};
+void COCHES5::pintar(){
+	gotoxy(x,y); printf("   %c%c%c%c",254,254,45,254);
+	gotoxy(x1,y); printf("   %c%c%c%c",254,254,45,254);
+	gotoxy(x2,y); printf("   %c%c%c%c",254,254,45,254);
+}
+void COCHES5::borrar(){
+	gotoxy(x,y); printf ("      ");	
+	gotoxy(x1,y); printf ("      ");	
+	gotoxy(x2,y); printf ("      ");	
+}
+
+void COCHES5::mover(){
+	x++;
+	if(x>141){
+		borrar();
+		y=11;
+		x=3;
+	}	
+
+	x1++;
+	if(x1>141){
+		borrar();
+		y=11;
+		x1=3;
+	}	
+	x2++;
+	if(x2>141){
+		borrar();
+		y=11;
+		x2=3;
+	}	
+
+	pintar();	
+}
 //Funcion clase que controla el coche gato
 class GATO{
 	int x=10,x1=36,x2=64,x3=101,y;
@@ -384,6 +428,7 @@ int main (void){
 	COCHES2 C2(25,3);
 	COCHES3 C3(50,7);
 	COCHES4 C4(98,5);
+	COCHES5 C5(95,11);
         GATO G(13,10);
 	
 	bool game_over = false;
@@ -395,6 +440,7 @@ int main (void){
 			C2.mover();
 			C3.mover();	
 			C4.mover();
+		        C5.mover();
 			G.mover();				
 			Sleep(30);
 	}
