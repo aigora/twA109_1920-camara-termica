@@ -138,7 +138,7 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
     
 			
  }
- 
+ //Funcion clase que controla el coche 1
  class COCHES1{
 	int x,x1=47,x2=94,y;		
 public:
@@ -158,6 +158,7 @@ void COCHES1::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el co
 	gotoxy(x1,y); printf ("     ");	
 	gotoxy(x2,y); printf ("     ");			
 }
+
 void COCHES1::mover(){
 	x++;
 	if(x>142){
@@ -179,7 +180,7 @@ void COCHES1::mover(){
 	}	
 	pintar();	
 }
-
+//Funcion clase que controla el coche 2
  class COCHES2{
 	int x=25,x1=70,x2=120,y;
 		
@@ -225,7 +226,7 @@ void COCHES2::mover(){
 
 	pintar();	
 }
-
+//Funcion clase que controla el coche 3
 class COCHES3{
 	int x=50,x1=80,x2=120,y;
 		
@@ -271,7 +272,43 @@ void COCHES3::mover(){
 
 	pintar();	
 }
+//Funcion clase que controla el coche 4
+class COCHES4{
+	int x=95, x1=48,y;
+	
+public: 
+	COCHES4(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover();
+};
+void COCHES4::pintar(){
+	gotoxy(x,y); printf("    %c%c%c",254,254,254);
+	gotoxy(x1,y); printf("   %c%c%c",254,254,254);
+}
+void COCHES4::borrar(){
+	gotoxy(x,y); printf ("     ");	
+	gotoxy(x1,y); printf ("     ");	
+}
 
+void COCHES4::mover(){
+		x=x-2;
+	if(x<3){
+		borrar();
+		y=5;
+		x=141;
+	}	
+
+	x1=x1-2;
+	if(x1<4){
+		borrar();
+		y=5;
+		x1=141;	
+		
+}
+	pintar();
+}
+//Funcion clase que controla el coche gato
 class GATO{
 	int x=10,x1=36,x2=64,x3=101,y;
 		
@@ -346,6 +383,7 @@ int main (void){
 	COCHES1 C1(2,2);
 	COCHES2 C2(25,3);
 	COCHES3 C3(50,7);
+//	COCHES4 C4(98,5);
     GATO G(13,10);
 	
 	bool game_over = false;
@@ -356,6 +394,7 @@ int main (void){
 			C1.mover();
 			C2.mover();
 			C3.mover();	
+		//	C4.mover();
 			G.mover();				
 			Sleep(30);
 	}
