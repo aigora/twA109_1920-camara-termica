@@ -352,6 +352,57 @@ void COCHES5::mover(){
 
 	pintar();	
 }
+//Funcion clase que controla el coche 6
+class COCHES6{
+	int x=18,x1=66,x2=113,y;
+	
+public: 
+	COCHES6(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover();
+};
+void COCHES6::pintar(){
+	gotoxy(x,y); printf("%c %c  ",48,48);
+	gotoxy(x,y-0.5); printf("%c%c%c  ",191,95,95);	
+	gotoxy(x1,y); printf("%c %c  ",48,48);
+	gotoxy(x1,y-0.5); printf("%c%c%c  ",191,95,95);	
+	gotoxy(x2,y); printf("%c %c  ",48,48);
+	gotoxy(x2,y-0.5);printf("%c%c%c  ",191,95,95);
+}
+void COCHES6::borrar(){
+	gotoxy(x,y); printf("        ");
+	gotoxy(x,y-0.5); printf("        ");	
+	gotoxy(x1,y); printf("        ");
+	gotoxy(x1,y-0.5); printf("        ");
+	gotoxy(x2,y); printf("        ");
+	gotoxy(x2,y-0.5); printf("        ");	
+}
+
+void COCHES6::mover(){
+		x=x-2;
+	if(x<4){
+		borrar();
+		y=14;
+		x=141;
+	}	
+
+	x1=x1-2;
+	if(x1<4){
+		borrar();
+		y=14;
+		x1=141;	
+		
+}
+	x2=x2-2;
+	if(x2<4){
+		borrar();
+		y=14;
+		x2=141;	
+		
+}
+	pintar();
+}
 //Funcion clase que controla el coche gato
 class GATO{
 	int x=10,x1=36,x2=64,x3=101,y;
@@ -429,6 +480,7 @@ int main (void){
 	COCHES3 C3(50,7);
 	COCHES4 C4(98,5);
 	COCHES5 C5(95,11);
+	COCHES6 C6(18,14);
         GATO G(13,10);
 	
 	bool game_over = false;
@@ -441,6 +493,7 @@ int main (void){
 			C3.mover();	
 			C4.mover();
 		        C5.mover();
+		        C6.mover();
 			G.mover();				
 			Sleep(30);
 	}
