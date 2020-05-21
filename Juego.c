@@ -450,7 +450,7 @@ void COCHES7::mover(){
 	pintar();	
 }
 //Funcion clase que controla el coche gato
-class GATO{
+class GATO1{
 	int x=10,x1=36,x2=64,x3=101,y;
 		
 public:
@@ -460,7 +460,7 @@ public:
 	void mover(); 
 	
 };
-void GATO::pintar(){ 
+void GATO1::pintar(){ 
 	gotoxy(x,y); printf("%c%c%c%c ",47,92,47,92);
 	gotoxy(x,y-0.5); printf("%c%c%c ",48,95,95);	
 	gotoxy(x1,y); printf("%c%c%c%c ",47,92,47,92);
@@ -471,7 +471,7 @@ void GATO::pintar(){
 	gotoxy(x3,y-0.5);printf("%c%c%c ",48,95,95);		
 }
 
-void GATO::borrar(){
+void GATO1::borrar(){
 	gotoxy(x,y); printf("        ");
 	gotoxy(x,y-0.5); printf("        ");	
 	gotoxy(x1,y); printf("        ");
@@ -482,7 +482,7 @@ void GATO::borrar(){
 	gotoxy(x3,y-0.5); printf("        ");		
 }
 
-void GATO::mover(){
+void GATO1::mover(){
 	x--;
 	if(x<3){
 		borrar();
@@ -512,6 +512,50 @@ void GATO::mover(){
 	pintar();	
 }
 
+//Funcion clase que controla el coche 8
+class COCHES8{
+	int x=90,x1=40,x2=15,y;
+	
+public: 
+	COCHES8(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover();
+};
+void COCHES8::pintar(){
+	gotoxy(x,y); printf("   %c%c%c%c",254,254,45,254);
+	gotoxy(x1,y); printf("   %c%c%c%c",254,254,45,254);
+	gotoxy(x2,y); printf("   %c%c%c%c",254,254,45,254);
+}
+void COCHES8::borrar(){
+	gotoxy(x,y); printf ("      ");	
+	gotoxy(x1,y); printf ("      ");	
+	gotoxy(x2,y); printf ("      ");	
+}
+
+void COCHES8::mover(){
+	x++;
+	if(x>141){
+		borrar();
+		y=25;
+		x=3;
+	}	
+
+	x1++;
+	if(x1>141){
+		borrar();
+		y=25;
+		x1=3;
+	}	
+	x2++;
+	if(x2>141){
+		borrar();
+		y=25;
+		x2=3;
+	}	
+
+	pintar();	
+}
  
 //Funcion principal, donde se aplican las demas para ejecutar el programa
 int main (void){
@@ -528,7 +572,9 @@ int main (void){
 	COCHES5 C5(95,11);
 	COCHES6 C6(18,14);
 	COCHES7 C7(33,19);
-        GATO G(13,10);
+	COCHES8 C8(90,25);
+    GATO G1(13,10);
+    GATO2 G2(8,24);
 	
 	bool game_over = false;
 	while (!game_over){
@@ -539,10 +585,12 @@ int main (void){
 			C2.mover();
 			C3.mover();	
 			C4.mover();
-		        C5.mover();
-		        C6.mover();
-		        C7.mover();
-			G.mover();				
+		    C5.mover();
+		    C6.mover();
+		    C7.mover();
+		    C8.mover();
+			G1.mover();	
+			G2.mover();				
 			Sleep(30);
 	}
 	return 0;
