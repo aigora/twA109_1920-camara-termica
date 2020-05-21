@@ -4,7 +4,6 @@
 #include <windows.h> 
 #include <time.h>
 #include<conio.h >
-#include <iostream>
 #define ARRIBA 72
 #define IZQUIERDA 75
 #define DERECHA 77
@@ -556,7 +555,228 @@ void COCHES8::mover(){
 
 	pintar();	
 }
- 
+//Funcion clase que controla el coche gato
+class GATO2{
+	int x=8,x1=72,x2=30,y;
+		
+public:
+	GATO2(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover(); 
+	
+};
+void GATO2::pintar(){ 
+	gotoxy(x,y); printf("%c%c%c%c ",47,92,47,92);
+	gotoxy(x,y-0.5); printf("%c%c%c ",48,95,95);	
+	gotoxy(x1,y); printf("%c%c%c%c ",47,92,47,92);
+	gotoxy(x1,y-0.5); printf("%c%c%c ",48,95,95);	
+	gotoxy(x2,y); printf("%c%c%c%c ",47,92,47,92);
+	gotoxy(x2,y-0.5);printf("%c%c%c ",48,95,95);			
+}
+
+void GATO2::borrar(){
+	gotoxy(x,y); printf("        ");
+	gotoxy(x,y-0.5); printf("        ");	
+	gotoxy(x1,y); printf("        ");
+	gotoxy(x1,y-0.5); printf("        ");
+	gotoxy(x2,y); printf("        ");
+	gotoxy(x2,y-0.5); printf("        ");			
+}
+
+void GATO2::mover(){
+	x--;
+	if(x<3){
+		borrar();
+		y=24;
+		x=143;
+	}	
+
+	x1--;
+	if(x1<3){
+		borrar();
+		y=24;
+		x1=143;
+	}	
+	x2--;
+	if(x2<3){
+		borrar();
+		y=24;
+		x2=143;
+	}	
+	pintar();	
+}
+
+//Funcion clase que controla el coche 9
+class COCHES9{
+	int x,x1=49,x2=94,y=27;		
+public:
+	COCHES9(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover(); 
+	
+};
+void COCHES9::pintar(){ //Funcion para dibujar el coche
+	gotoxy(x,y); printf("   %c%c%c",254,254,254);
+	gotoxy(x1,y); printf("   %c%c%c",254,254,254);
+	gotoxy(x2,y); printf("   %c%c%c",254,254,254);	
+}
+void COCHES9::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el coche y dar la sensacion de movimiento
+	gotoxy(x,y); printf ("     ");	
+	gotoxy(x1,y); printf ("     ");	
+	gotoxy(x2,y); printf ("     ");			
+}
+
+void COCHES9::mover(){
+	x=x+2;
+	if(x>142){
+		borrar();
+		y;
+		x=2;
+	}	
+	x1=x1+2;
+	if(x1>142){
+		borrar();
+		y;
+		x1=2;
+	}	
+	x2=x2+2;
+	if(x2>142){
+		borrar();
+		y;
+		x2=2;
+	}	
+	pintar();	
+}
+//Funcion clase que controla el coche 2
+ class COCHES10{
+	int x=25,x1=70,x2=120,y=29;
+		
+public:
+	COCHES10(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover(); 
+	
+};
+void COCHES10::pintar(){ 
+	gotoxy(x,y); printf("   %c%c%c",254,254,254);
+	gotoxy(x1,y); printf("   %c%c%c",254,254,254);
+	gotoxy(x2,y); printf("   %c%c%c",254,254,254);	
+}
+
+void COCHES10::borrar(){ 
+	gotoxy(x,y); printf ("     ");	
+	gotoxy(x1,y); printf ("     ");	
+	gotoxy(x2,y); printf ("     ");			
+}
+
+void COCHES10::mover(){
+	x++;
+	if(x>142){
+		borrar();
+		y;
+		x=2;
+	}	
+
+	x1++;
+	if(x1>142){
+		borrar();
+		y;
+		x1=2;
+	}	
+	x2++;
+	if(x2>142){
+		borrar();
+		y;
+		x2=2;
+	}	
+
+	pintar();	
+}
+//Funcion clase que controla el coche 3
+class COCHES11{
+	int x=50,x1=80,x2=120,y;
+		
+public:
+	COCHES11(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover(); 
+	
+};
+void COCHES11::pintar(){ 
+	gotoxy(x,y); printf("   %c%c%c%c",111,45,111,217);
+	gotoxy(x1,y); printf("   %c%c%c%c",111,45,111,217);
+	gotoxy(x2,y); printf("   %c%c%c%c",111,45,111,217);
+}
+
+void COCHES11::borrar(){ 
+	gotoxy(x,y); printf ("      ");	
+	gotoxy(x1,y); printf ("      ");	
+	gotoxy(x2,y); printf ("      ");			
+}
+
+void COCHES11::mover(){
+	x++;
+	if(x>141){
+		borrar();
+		y=31;
+		x=2;
+	}	
+
+	x1++;
+	if(x1>141){
+		borrar();
+		y=31;
+		x1=2;
+	}	
+	x2++;
+	if(x2>141){
+		borrar();
+		y=31;
+		x2=2;
+	}	
+
+	pintar();	
+}
+//Funcion clase que controla el coche 4
+class COCHES12{
+	int x=94, x1=48,y=21;
+	
+public: 
+	COCHES12(int _x,int _y):x(_x),y(_y){}	
+	void pintar();
+	void borrar();
+	void mover();
+};
+void COCHES12::pintar(){
+	gotoxy(x,y); printf("%c%c%c    ",254,254,254);
+	gotoxy(x1,y); printf("%c%c%c    ",254,254,254);
+}
+void COCHES12::borrar(){
+	gotoxy(x,y); printf ("     ");	
+	gotoxy(x1,y); printf ("     ");	
+}
+
+void COCHES12::mover(){
+	x--;
+	if(x<4){
+		borrar();
+		y;
+		x=141;
+	}	
+
+	x1--;
+	if(x1<4){
+		borrar();
+		y;
+		x1=141;	
+		
+}
+	pintar();
+}
 //Funcion principal, donde se aplican las demas para ejecutar el programa
 int main (void){
 	
@@ -573,6 +793,10 @@ int main (void){
 	COCHES6 C6(18,14);
 	COCHES7 C7(33,19);
 	COCHES8 C8(90,25);
+	COCHES9 C9(2,27);
+	COCHES10 C10(25,29);
+	COCHES11 C11(50,31);
+	COCHES12 C12(94,21);
     GATO G1(13,10);
     GATO2 G2(8,24);
 	
@@ -589,6 +813,10 @@ int main (void){
 		    C6.mover();
 		    C7.mover();
 		    C8.mover();
+		    C9.mover();
+			C10.mover();
+			C11.mover();
+			C12.mover();
 			G1.mover();	
 			G2.mover();				
 			Sleep(30);
