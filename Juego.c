@@ -13,13 +13,13 @@
 
 // Funcion para situarse en algun punto del plano
 void gotoxy(int x,int y){
-	HANDLE hCon;
-	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD dwPos;
+	HANDLE hCon;//Creamos un identificardor de la ventana
+	hCon = GetStdHandle(STD_OUTPUT_HANDLE);//Recuperamos el identificador de la consola
+	COORD dwPos;//Esta estructutura viene definia en windows.h
 	dwPos.X = x;
 	dwPos.Y = y;
 	
-	SetConsoleCursorPosition (hCon, dwPos);
+	SetConsoleCursorPosition (hCon, dwPos);//Funcion de la biblioteca windows.h que nos permite dar una posición al cursor 
 }
 
 //Funcion para ocultar el cursor
@@ -800,10 +800,9 @@ int main (void){
     GATO G1(13,10);
     GATO2 G2(8,24);
 	
-	bool game_over = false;
-	while (!game_over){
-		
-		
+	bool game_over = false;//Creamos una varible lógica 
+	while (!game_over)//Para que el juego se repita mientras que la variable game over sea flaso
+	{
 			J.mover();
 			C1.mover();
 			C2.mover();
