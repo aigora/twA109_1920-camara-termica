@@ -1,9 +1,10 @@
-//IMPORTANTE!! AL EJECUTAR POR PRIMERA VEZ, PINCHAR EN PROPIEDADES EN LA VENTANA DE EJECUCION, Y EN LA PESTAÑA DE DISEÑO SE ESCRIBE DE ANCHO: 170; Y DE ALTO:36
+//IMPORTANTE!! AL EJECUTAR POR PRIMERA VEZ, PINCHAR EN PROPIEDADES EN LA VENTANA DE EJECUCION, Y EN LA PESTAÃ‘A DE DISEÃ‘O SE ESCRIBE DE ANCHO: 170; Y DE ALTO:36
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <windows.h> 
 #include <time.h>
 #include<conio.h >
+#include <iostream>
 #define ARRIBA 72
 #define IZQUIERDA 75
 #define DERECHA 77
@@ -13,13 +14,13 @@
 
 // Funcion para situarse en algun punto del plano
 void gotoxy(int x,int y){
-	HANDLE hCon;//Creamos un identificardor de la ventana
+	HANDLE hCon; //Creamos un identificardor de la ventana
 	hCon = GetStdHandle(STD_OUTPUT_HANDLE);//Recuperamos el identificador de la consola
-	COORD dwPos;//Esta estructutura viene definia en windows.h
-	dwPos.X = x;
-	dwPos.Y = y;
+	COORD Pos; //Esta estructutura viene definia en windows.h
+	Pos.X = x;
+	Pos.Y = y;
 	
-	SetConsoleCursorPosition (hCon, dwPos);//Funcion de la biblioteca windows.h que nos permite dar una posici�n al cursor 
+	SetConsoleCursorPosition (hCon, Pos); //Funcion de la biblioteca windows.h que nos permite dar una posición al cursor 
 }
 
 //Funcion para ocultar el cursor
@@ -72,7 +73,6 @@ void pintar_limites(){
 	gotoxy(165,35);printf("%c",188);
 	gotoxy(74,17);printf("SAFE ZONE");
 	gotoxy(150,1);printf("CROSS THE ROAD!");
-	gotoxy(150,3);printf("Vidas:");
 	gotoxy(150,5);printf("Puntos:");
 	gotoxy(150,7);printf("Tiempo:");
 	gotoxy(150,9);printf("Monedas:");
@@ -83,12 +83,13 @@ void pintar_limites(){
 
 class JUGADOR{  //Funcion clase, que sirve de inicio
 	int x,y;
-	
+	int vidas;
 public:
-	JUGADOR(int _x,int _y):x(_x),y(_y){}
+	JUGADOR(int _x,int _y,int _vidas):x(_x),y(_y),vidas(_vidas){}
 	void pintar();
 	void borrar();
 	void mover(); 
+	void contar_vidas();
 	
 };
 
@@ -133,10 +134,14 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 				pintar();
 				
 			}
+}
+void JUGADOR::contar_vidas()
+{
+	gotoxy(150,3);
+	printf("Vidas: %d",vidas);
+	
+}
 		
-    
-			
- }
  //Funcion clase que controla el coche 1
  class COCHES1{
 	int x,x1=47,x2=94,y;		
@@ -453,7 +458,7 @@ class GATO1{
 	int x=10,x1=36,x2=64,x3=101,y;
 		
 public:
-	GATO(int _x,int _y):x(_x),y(_y){}	
+	GATO1(int _x,int _y):x(_x),y(_y){}	
 	void pintar();
 	void borrar();
 	void mover(); 
@@ -511,6 +516,7 @@ void GATO1::mover(){
 	pintar();	
 }
 
+
 //Funcion clase que controla el coche 8
 class COCHES8{
 	int x=90,x1=40,x2=15,y;
@@ -555,6 +561,7 @@ void COCHES8::mover(){
 
 	pintar();	
 }
+
 //Funcion clase que controla el coche gato
 class GATO2{
 	int x=8,x1=72,x2=30,y;
@@ -783,8 +790,9 @@ int main (void){
 	system("COLOR 02");
 	OcultarCursor(); 
 	pintar_limites();
-	JUGADOR J(75,34);
+	JUGADOR J(75,34,3);
 	J.pintar();
+	J.contar_vidas();
 	COCHES1 C1(2,2);
 	COCHES2 C2(25,3);
 	COCHES3 C3(50,7);
@@ -797,11 +805,11 @@ int main (void){
 	COCHES10 C10(25,29);
 	COCHES11 C11(50,31);
 	COCHES12 C12(94,21);
-    GATO G1(13,10);
+    GATO1 G1(13,10);
     GATO2 G2(8,24);
 	
-	bool game_over = false;//Creamos una varible l�gica 
-	while (!game_over)//Para que el juego se repita mientras que la variable game over sea flaso
+	bool game_over = false; //Creamos una varible lógica 
+	while (!game_over) //Para que el juego se repita mientras que la variable game over sea flaso
 	{
 			J.mover();
 			C1.mover();
@@ -815,7 +823,7 @@ int main (void){
 		    C9.mover();
 			C10.mover();
 			C11.mover();
-			C12.mover();
+			C12.mover();	
 			G1.mover();	
 			G2.mover();				
 			Sleep(30);
