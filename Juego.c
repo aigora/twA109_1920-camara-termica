@@ -818,7 +818,7 @@ void MONEDA::contar_monedas(class JUGADOR &J){
 	{
 		J.sumar_monedas();
 		J.pintar();
-		J.dibujar_monedas();
+		J.mostrar_monedas();
 		x=0;
 		y=0;
 	
@@ -833,7 +833,7 @@ int main (void){
 	pintar_limites();
 	JUGADOR J(75,34,0);
 	J.pintar();
-	J.dibujar_monedas();
+	J.mostrar_monedas();
 	COCHES1 C1(2,2);
 	COCHES2 C2(25,3);
 	COCHES3 C3(50,7);
