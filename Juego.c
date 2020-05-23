@@ -38,6 +38,7 @@ void gotoxy(int x,int y){
 //Funcion para dibujar los limites del juego
 void pintar_limites(){
 	int i;
+	
 		
 	for(i=2;i<148;i++){
 		gotoxy(i,0);printf("%c",205);
@@ -637,19 +638,19 @@ void COCHES9::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el co
 
 void COCHES9::mover(){
 	x=x+2;
-	if(x>142){
+	if(x>141){
 		borrar();
 		y;
 		x=2;
 	}	
 	x1=x1+2;
-	if(x1>142){
+	if(x1>141){
 		borrar();
 		y;
 		x1=2;
 	}	
 	x2=x2+2;
-	if(x2>142){
+	if(x2>141){
 		borrar();
 		y;
 		x2=2;
@@ -808,6 +809,8 @@ int main (void){
     GATO1 G1(13,10);
     GATO2 G2(8,24);
 	
+	
+	
 	bool game_over = false; //Creamos una varible lógica 
 	while (!game_over) //Para que el juego se repita mientras que la variable game over sea flaso
 	{
@@ -828,5 +831,7 @@ int main (void){
 			G2.mover();				
 			Sleep(30);
 	}
+	
+	
 	return 0;
 }
