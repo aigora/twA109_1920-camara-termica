@@ -1,9 +1,10 @@
-//IMPORTANTE!! AL EJECUTAR POR PRIMERA VEZ, PINCHAR EN PROPIEDADES EN LA VENTANA DE EJECUCION, Y EN LA PESTAÑA DE DISEÑO SE ESCRIBE DE ANCHO: 170; Y DE ALTO:36
+//IMPORTANTE!! AL EJECUTAR POR PRIMERA VEZ, PINCHAR EN PROPIEDADES EN LA VENTANA DE EJECUCION, Y EN LA PESTAÃ‘A DE DISEÃ‘O SE ESCRIBE DE ANCHO: 170; Y DE ALTO:36
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <windows.h> 
 #include <time.h>
 #include<conio.h >
+#include <iostream>
 #define ARRIBA 72
 #define IZQUIERDA 75
 #define DERECHA 77
@@ -13,13 +14,13 @@
 
 // Funcion para situarse en algun punto del plano
 void gotoxy(int x,int y){
-	HANDLE hCon;//Creamos un identificardor de la ventana
+	HANDLE hCon; //Creamos un identificardor de la ventana
 	hCon = GetStdHandle(STD_OUTPUT_HANDLE);//Recuperamos el identificador de la consola
-	COORD dwPos;//Esta estructutura viene definia en windows.h
-	dwPos.X = x;
-	dwPos.Y = y;
+	COORD Pos; //Esta estructutura viene definia en windows.h
+	Pos.X = x;
+	Pos.Y = y;
 	
-	SetConsoleCursorPosition (hCon, dwPos);//Funcion de la biblioteca windows.h que nos permite dar una posici�n al cursor 
+	SetConsoleCursorPosition (hCon, Pos); //Funcion de la biblioteca windows.h que nos permite dar una posición al cursor 
 }
 
 //Funcion para ocultar el cursor
@@ -37,6 +38,7 @@ void gotoxy(int x,int y){
 //Funcion para dibujar los limites del juego
 void pintar_limites(){
 	int i;
+	
 		
 	for(i=2;i<148;i++){
 		gotoxy(i,0);printf("%c",205);
@@ -72,7 +74,6 @@ void pintar_limites(){
 	gotoxy(165,35);printf("%c",188);
 	gotoxy(74,17);printf("SAFE ZONE");
 	gotoxy(150,1);printf("CROSS THE ROAD!");
-	gotoxy(150,3);printf("Vidas:");
 	gotoxy(150,5);printf("Puntos:");
 	gotoxy(150,7);printf("Tiempo:");
 	gotoxy(150,9);printf("Monedas:");
@@ -83,12 +84,25 @@ void pintar_limites(){
 
 class JUGADOR{  //Funcion clase, que sirve de inicio
 	int x,y;
-	
+	int monedas;
 public:
-	JUGADOR(int _x,int _y):x(_x),y(_y){}
+	JUGADOR(int _x,int _y,int _monedas):x(_x),y(_y),monedas(_monedas){}
+	int X()
+	{
+		return x;
+	}
+	int Y()
+	{
+		return y;
+	}
 	void pintar();
 	void borrar();
 	void mover(); 
+	void mostrar_monedas();
+	void sumar_monedas()
+	{
+		monedas++;
+	}
 	
 };
 
@@ -133,10 +147,13 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 				pintar();
 				
 			}
+}
+void JUGADOR::mostrar_monedas()
+{
+	gotoxy(150,9);
+	printf("Monedas: %d",monedas);
+}
 		
-    
-			
- }
  //Funcion clase que controla el coche 1
  class COCHES1{
 	int x,x1=47,x2=94,y;		
@@ -453,7 +470,7 @@ class GATO1{
 	int x=10,x1=36,x2=64,x3=101,y;
 		
 public:
-	GATO(int _x,int _y):x(_x),y(_y){}	
+	GATO1(int _x,int _y):x(_x),y(_y){}	
 	void pintar();
 	void borrar();
 	void mover(); 
@@ -511,6 +528,7 @@ void GATO1::mover(){
 	pintar();	
 }
 
+
 //Funcion clase que controla el coche 8
 class COCHES8{
 	int x=90,x1=40,x2=15,y;
@@ -555,6 +573,7 @@ void COCHES8::mover(){
 
 	pintar();	
 }
+
 //Funcion clase que controla el coche gato
 class GATO2{
 	int x=8,x1=72,x2=30,y;
@@ -630,26 +649,26 @@ void COCHES9::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el co
 
 void COCHES9::mover(){
 	x=x+2;
-	if(x>142){
+	if(x>141){
 		borrar();
 		y;
 		x=2;
 	}	
 	x1=x1+2;
-	if(x1>142){
+	if(x1>141){
 		borrar();
 		y;
 		x1=2;
 	}	
 	x2=x2+2;
-	if(x2>142){
+	if(x2>141){
 		borrar();
 		y;
 		x2=2;
 	}	
 	pintar();	
 }
-//Funcion clase que controla el coche 2
+//Funcion clase que controla el coche 10
  class COCHES10{
 	int x=25,x1=70,x2=120,y=29;
 		
@@ -695,7 +714,7 @@ void COCHES10::mover(){
 
 	pintar();	
 }
-//Funcion clase que controla el coche 3
+//Funcion clase que controla el coche 11
 class COCHES11{
 	int x=50,x1=80,x2=120,y;
 		
@@ -741,7 +760,7 @@ void COCHES11::mover(){
 
 	pintar();	
 }
-//Funcion clase que controla el coche 4
+//Funcion clase que controla el coche 12
 class COCHES12{
 	int x=94, x1=48,y=21;
 	
@@ -777,14 +796,44 @@ void COCHES12::mover(){
 }
 	pintar();
 }
+
+class MONEDA{
+	int x,y;
+	
+public:
+    MONEDA(int _x,int _y):x(_x),y(_y){}
+    void pintar();
+    void borrar();
+    void contar_monedas( class JUGADOR &J);
+	
+};
+void MONEDA::pintar(){
+	gotoxy(x,y); printf("%c",284);
+}
+void MONEDA::borrar(){
+	gotoxy(x,y); printf ("  ");	
+}
+void MONEDA::contar_monedas(class JUGADOR &J){
+	if(x >=J.X() && x< J.X()+5 && y>=J.Y())
+	{
+		J.sumar_monedas();
+		J.pintar();
+		J.mostrar_monedas();
+		x=0;
+		y=0;
+	
+	}
+	
+}
 //Funcion principal, donde se aplican las demas para ejecutar el programa
 int main (void){
 	
 	system("COLOR 02");
 	OcultarCursor(); 
 	pintar_limites();
-	JUGADOR J(75,34);
+	JUGADOR J(75,34,0);
 	J.pintar();
+	J.mostrar_monedas();
 	COCHES1 C1(2,2);
 	COCHES2 C2(25,3);
 	COCHES3 C3(50,7);
@@ -797,28 +846,41 @@ int main (void){
 	COCHES10 C10(25,29);
 	COCHES11 C11(50,31);
 	COCHES12 C12(94,21);
-    GATO G1(13,10);
-    GATO2 G2(8,24);
+        GATO1 G1(13,10);
+        GATO2 G2(8,24);
+	MONEDA M1(75,28);
+        MONEDA M2(85,17);
+        MONEDA M3(70,6);
 	
-	bool game_over = false;//Creamos una varible l�gica 
-	while (!game_over)//Para que el juego se repita mientras que la variable game over sea flaso
+	
+	
+	bool game_over = false; //Creamos una varible lógica 
+	while (!game_over) //Para que el juego se repita mientras que la variable game over sea flaso
 	{
 			J.mover();
 			C1.mover();
 			C2.mover();
 			C3.mover();	
 			C4.mover();
-		    C5.mover();
-		    C6.mover();
-		    C7.mover();
-		    C8.mover();
-		    C9.mover();
+		        C5.mover();
+		        C6.mover();
+		        C7.mover();
+		        C8.mover();
+		        C9.mover();
 			C10.mover();
 			C11.mover();
-			C12.mover();
+			C12.mover();	
 			G1.mover();	
-			G2.mover();				
+			G2.mover();
+		        M1.pintar();
+			M1.contar_monedas(J);
+			M2.pintar();
+			M2.contar_monedas(J);
+			M3.pintar();
+			M3.contar_monedas(J);
 			Sleep(30);
 	}
+	
+	
 	return 0;
 }
