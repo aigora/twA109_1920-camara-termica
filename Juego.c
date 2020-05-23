@@ -656,7 +656,7 @@ void COCHES9::mover(){
 	}	
 	pintar();	
 }
-//Funcion clase que controla el coche 2
+//Funcion clase que controla el coche 10
  class COCHES10{
 	int x=25,x1=70,x2=120,y=29;
 		
@@ -702,7 +702,7 @@ void COCHES10::mover(){
 
 	pintar();	
 }
-//Funcion clase que controla el coche 3
+//Funcion clase que controla el coche 11
 class COCHES11{
 	int x=50,x1=80,x2=120,y;
 		
@@ -748,7 +748,7 @@ void COCHES11::mover(){
 
 	pintar();	
 }
-//Funcion clase que controla el coche 4
+//Funcion clase que controla el coche 12
 class COCHES12{
 	int x=94, x1=48,y=21;
 	
