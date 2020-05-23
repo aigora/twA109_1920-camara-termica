@@ -84,13 +84,25 @@ void pintar_limites(){
 
 class JUGADOR{  //Funcion clase, que sirve de inicio
 	int x,y;
-	int vidas;
+	int monedas;
 public:
-	JUGADOR(int _x,int _y,int _vidas):x(_x),y(_y),vidas(_vidas){}
+	JUGADOR(int _x,int _y,int _monedas):x(_x),y(_y),monedas(_monedas){}
+	int X()
+	{
+		return x;
+	}
+	int Y()
+	{
+		return y;
+	}
 	void pintar();
 	void borrar();
 	void mover(); 
-	void contar_vidas();
+	void mostrar_monedas();
+	void sumar_monedas()
+	{
+		monedas++;
+	}
 	
 };
 
@@ -136,11 +148,10 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 				
 			}
 }
-void JUGADOR::contar_vidas()
+void JUGADOR::mostrar_monedas()
 {
-	gotoxy(150,3);
-	printf("Vidas: %d",vidas);
-	
+	gotoxy(150,9);
+	printf("Monedas: %d",monedas);
 }
 		
  //Funcion clase que controla el coche 1
@@ -785,15 +796,44 @@ void COCHES12::mover(){
 }
 	pintar();
 }
+
+class MONEDA{
+	int x,y;
+	
+public:
+    MONEDA(int _x,int _y):x(_x),y(_y){}
+    void pintar();
+    void borrar();
+    void contar_monedas( class JUGADOR &J);
+	
+};
+void MONEDA::pintar(){
+	gotoxy(x,y); printf("%c",284);
+}
+void MONEDA::borrar(){
+	gotoxy(x,y); printf ("  ");	
+}
+void MONEDA::contar_monedas(class JUGADOR &J){
+	if(x >=J.X() && x< J.X()+5 && y>=J.Y())
+	{
+		J.sumar_monedas();
+		J.pintar();
+		J.dibujar_monedas();
+		x=0;
+		y=0;
+	
+	}
+	
+}
 //Funcion principal, donde se aplican las demas para ejecutar el programa
 int main (void){
 	
 	system("COLOR 02");
 	OcultarCursor(); 
 	pintar_limites();
-	JUGADOR J(75,34,3);
+	JUGADOR J(75,34,0);
 	J.pintar();
-	J.contar_vidas();
+	J.dibujar_monedas();
 	COCHES1 C1(2,2);
 	COCHES2 C2(25,3);
 	COCHES3 C3(50,7);
@@ -806,8 +846,11 @@ int main (void){
 	COCHES10 C10(25,29);
 	COCHES11 C11(50,31);
 	COCHES12 C12(94,21);
-    GATO1 G1(13,10);
-    GATO2 G2(8,24);
+        GATO1 G1(13,10);
+        GATO2 G2(8,24);
+	MONEDA M1(75,28);
+        MONEDA M2(85,17);
+        MONEDA M3(70,6);
 	
 	
 	
@@ -819,16 +862,22 @@ int main (void){
 			C2.mover();
 			C3.mover();	
 			C4.mover();
-		    C5.mover();
-		    C6.mover();
-		    C7.mover();
-		    C8.mover();
-		    C9.mover();
+		        C5.mover();
+		        C6.mover();
+		        C7.mover();
+		        C8.mover();
+		        C9.mover();
 			C10.mover();
 			C11.mover();
 			C12.mover();	
 			G1.mover();	
-			G2.mover();				
+			G2.mover();
+		        M1.pintar();
+			M1.contar_monedas(J);
+			M2.pintar();
+			M2.contar_monedas(J);
+			M3.pintar();
+			M3.contar_monedas(J);
 			Sleep(30);
 	}
 	
