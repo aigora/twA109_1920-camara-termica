@@ -1,26 +1,25 @@
-//IMPORTANTE!! AL EJECUTAR POR PRIMERA VEZ, PINCHAR EN PROPIEDADES EN LA VENTANA DE EJECUCION, Y EN LA PESTAÃ‘A DE DISEÃ‘O SE ESCRIBE DE ANCHO: 170; Y DE ALTO:36
+//IMPORTANTE!! AL EJECUTAR POR PRIMERA VEZ, PINCHAR EN PROPIEDADES EN LA VENTANA DE EJECUCION, Y EN LA PESTANYA DE DISENYO SE ESCRIBE DE ANCHO: 170; Y DE ALTO:36
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <windows.h> 
 #include <time.h>
-#include<conio.h >
-#include <iostream>
+#include <conio.h >
 #define ARRIBA 72
 #define IZQUIERDA 75
 #define DERECHA 77
 #define ABAJO 80 
- 
+#include <ctime>
 
 
 // Funcion para situarse en algun punto del plano
 void gotoxy(int x,int y){
-	HANDLE hCon; //Creamos un identificardor de la ventana
+	HANDLE hCon;//Creamos un identificardor de la ventana
 	hCon = GetStdHandle(STD_OUTPUT_HANDLE);//Recuperamos el identificador de la consola
-	COORD Pos; //Esta estructutura viene definia en windows.h
-	Pos.X = x;
-	Pos.Y = y;
+	COORD dwPos;//Esta estructutura viene definia en windows.h
+	dwPos.X = x;
+	dwPos.Y = y;
 	
-	SetConsoleCursorPosition (hCon, Pos); //Funcion de la biblioteca windows.h que nos permite dar una posición al cursor 
+	SetConsoleCursorPosition (hCon, dwPos);//Funcion de la biblioteca windows.h que nos permite dar una posición al cursor 
 }
 
 //Funcion para ocultar el cursor
@@ -35,10 +34,20 @@ void gotoxy(int x,int y){
 	SetConsoleCursorInfo(hCon,&cci);
  	
  }
+ //Funcion para contar el tiempo
+ void tiempo(){
+ 	int min,sec,x=1000;
+	
+	for(min=0;min<60;min++){
+			for(sec=0;sec<60;sec++){
+				gotoxy(158,7);printf("%02i:%02i\r",min,sec);
+				Sleep(x);
+			}
+		}
+	}
 //Funcion para dibujar los limites del juego
 void pintar_limites(){
 	int i;
-	
 		
 	for(i=2;i<148;i++){
 		gotoxy(i,0);printf("%c",205);
@@ -74,36 +83,29 @@ void pintar_limites(){
 	gotoxy(165,35);printf("%c",188);
 	gotoxy(74,17);printf("SAFE ZONE");
 	gotoxy(150,1);printf("CROSS THE ROAD!");
-	gotoxy(150,5);printf("Puntos:");
+	gotoxy(150,3);printf("Vidas:");
 	gotoxy(150,7);printf("Tiempo:");
 	gotoxy(150,9);printf("Monedas:");
+	
 	   
 }
 
 //Conjunto de funciones para programar y manejar al jugador
 
 class JUGADOR{  //Funcion clase, que sirve de inicio
-	int x,y;
-	int monedas;
+	int x,y,vidas,monedas;
+	
 public:
-	JUGADOR(int _x,int _y,int _monedas):x(_x),y(_y),monedas(_monedas){}
-	int X()
-	{
-		return x;
-	}
-	int Y()
-	{
-		return y;
-	}
+	JUGADOR(int _x,int _y,int _vidas,int _monedas):x(_x),y(_y),vidas(_vidas),monedas(_monedas){}
+	int X(){return x;}
+	int Y(){return y;}
 	void pintar();
 	void borrar();
 	void mover(); 
+	void pintar_vidas();
+	void perder_vidas();
 	void mostrar_monedas();
-	void sumar_monedas()
-	{
-		monedas++;
-	}
-	
+	void sumar_monedas(){monedas++;}
 };
 
 void JUGADOR::pintar(){ //Funcion para dibujar al jugador
@@ -121,6 +123,9 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 
  void JUGADOR::mover(){ //Funcion para mover al jugador
  int i;
+ int puntos=0;
+ 
+
  		if(kbhit()){
 				char tecla = getch();
 				borrar();
@@ -144,16 +149,49 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 				if(tecla==ABAJO && y==26 )y++;
 				if(tecla==ARRIBA && y==30 )y--;
 				if(tecla==ABAJO && y==30 )y++;
+				if(tecla==ARRIBA&& y==1){
+					gotoxy(74,17);printf("HAS GANADO!!!");
+					_getch();
+					exit(1);
+					
+
+				}
+			
 				pintar();
 				
 			}
-}
-void JUGADOR::mostrar_monedas()
-{
-	gotoxy(150,9);
-	printf("Monedas: %d",monedas);
-}
 		
+    
+			
+ }
+ void JUGADOR::pintar_vidas(){//Funcion para dibujar las vidas del jugador
+	gotoxy(150,3);
+	printf("Vidas: %d",vidas);
+	
+ }
+ void JUGADOR::perder_vidas(){
+
+ 	if(vidas==1){
+ 		system("cls");
+ 		gotoxy(75,17);
+		printf("GAME OVER :( \n");
+		_getch();
+		exit(1);
+	 }
+	 else{
+ 	vidas--;
+ 	borrar();
+ 	x=75;
+ 	y=34;
+
+ }
+ }
+ 
+ void JUGADOR::mostrar_monedas(){
+ 	gotoxy(150,9);
+ 	printf("Monedas: %d",monedas);
+ } 
+ 
  //Funcion clase que controla el coche 1
  class COCHES1{
 	int x,x1=47,x2=94,y;		
@@ -162,7 +200,7 @@ public:
 	void pintar();
 	void borrar();
 	void mover(); 
-	
+	void choque(class JUGADOR &J); 
 };
 void COCHES1::pintar(){ //Funcion para dibujar el coche
 	gotoxy(x,y); printf("   %c%c%c",254,254,254);
@@ -196,6 +234,44 @@ void COCHES1::mover(){
 	}	
 	pintar();	
 }
+void COCHES1::choque(class JUGADOR &J){
+	if(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x++;
+	if(x>142){
+		borrar();
+		y=2;
+		x=2;
+	}	
+}
+	if(x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+	
+	x1++;
+	if(x1>142){
+		borrar();
+		y=2;
+		x1=2;
+	}
+}
+	if(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x2++;
+	if(x2>142){
+		borrar();
+		y=2;
+		x2=2;
+	}
+}
+}
 //Funcion clase que controla el coche 2
  class COCHES2{
 	int x=25,x1=70,x2=120,y;
@@ -205,7 +281,7 @@ public:
 	void pintar();
 	void borrar();
 	void mover(); 
-	
+	void choque(class JUGADOR &J); 
 };
 void COCHES2::pintar(){ 
 	gotoxy(x,y); printf("   %c%c%c",254,254,254);
@@ -242,6 +318,44 @@ void COCHES2::mover(){
 
 	pintar();	
 }
+void COCHES2::choque(class JUGADOR &J){
+	if(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x++;
+	if(x>142){
+		borrar();
+		y=3;
+		x=2;
+	}	
+}
+	if(x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+	
+	x1++;
+	if(x1>142){
+		borrar();
+		y=3;
+		x1=2;
+	}	
+}
+	if(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x2++;
+	if(x2>142){
+		borrar();
+		y=3;
+		x2=2;
+	}
+}
+}
 //Funcion clase que controla el coche 3
 class COCHES3{
 	int x=50,x1=80,x2=120,y;
@@ -251,7 +365,7 @@ public:
 	void pintar();
 	void borrar();
 	void mover(); 
-	
+	void choque(class JUGADOR &J); 
 };
 void COCHES3::pintar(){ 
 	gotoxy(x,y); printf("   %c%c%c%c",111,45,111,217);
@@ -288,6 +402,44 @@ void COCHES3::mover(){
 
 	pintar();	
 }
+void COCHES3::choque(class JUGADOR &J){
+	if(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x++;
+	if(x>141){
+		borrar();
+		y=7;
+		x=2;
+	}	
+}
+	if(x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+	
+	x1++;
+	if(x1>141){
+		borrar();
+		y=7;
+		x1=2;
+	}	
+}
+	if(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x2++;
+	if(x2>141){
+		borrar();
+		y=7;
+		x2=2;
+	}
+}
+}
 //Funcion clase que controla el coche 4
 class COCHES4{
 	int x=95, x1=48,y;
@@ -297,6 +449,7 @@ public:
 	void pintar();
 	void borrar();
 	void mover();
+	void choque(class JUGADOR &J); 
 };
 void COCHES4::pintar(){
 	gotoxy(x,y); printf("%c%c%c    ",254,254,254);
@@ -324,6 +477,32 @@ void COCHES4::mover(){
 }
 	pintar();
 }
+void COCHES4::choque(class JUGADOR &J){
+	if(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x=x-2;
+	if(x<4){
+		borrar();
+		y=5;
+		x=141;			
+    }		
+}
+	if(x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+	
+	x1=x1-2;
+	if(x1<4){
+		borrar();
+		y=5;
+		x1=141;			
+    }	
+}
+}
 //Funcion clase que controla el coche 5
 class COCHES5{
 	int x=95,x1=48,x2=25,y;
@@ -333,6 +512,7 @@ public:
 	void pintar();
 	void borrar();
 	void mover();
+	void choque(class JUGADOR &J); 
 };
 void COCHES5::pintar(){
 	gotoxy(x,y); printf("   %c%c%c%c",254,254,45,254);
@@ -368,6 +548,44 @@ void COCHES5::mover(){
 
 	pintar();	
 }
+void COCHES5::choque(class JUGADOR &J){
+	if(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x++;
+	if(x>141){
+		borrar();
+		y=11;
+		x=3;
+	}
+}
+	if(x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+	
+	x1++;
+	if(x1>141){
+		borrar();
+		y=11;
+		x1=3;
+	}	
+}
+	if(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x2++;
+	if(x2>141){
+		borrar();
+		y=11;
+		x2=3;
+	}	
+}
+}
 //Funcion clase que controla el coche 6
 class COCHES6{
 	int x=18,x1=66,x2=113,y;
@@ -377,6 +595,7 @@ public:
 	void pintar();
 	void borrar();
 	void mover();
+	void choque(class JUGADOR &J); 
 };
 void COCHES6::pintar(){
 	gotoxy(x,y); printf("%c %c  ",48,48);
@@ -419,6 +638,50 @@ void COCHES6::mover(){
 }
 	pintar();
 }
+void COCHES6::choque(class JUGADOR &J){
+	if((x+2>=J.X() && x+2<=J.X()+4 && y==J.Y())||(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()+1)){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+		borrar();
+
+	x=x-2;
+	if(x<4){
+		borrar();
+		y=14;
+		x=141;	
+		
+}
+}
+	if((x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y())||(x1+2>=J.X() && x1+2<=J.X()+4  && y==J.Y()+1)){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+		borrar();
+	
+	x1=x1-2;
+	if(x1<4){
+		borrar();
+		y=14;
+		x1=141;	
+		
+}	
+}
+	if((x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y())||(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()+1)){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+		borrar();
+
+	x2=x2-2;
+	if(x2<4){
+		borrar();
+		y=14;
+		x2=141;	
+		
+}
+}
+}
 //Funcion clase que controla el coche 7
 class COCHES7{
 	int x=33,x1=78,x2=126,y;
@@ -428,7 +691,7 @@ public:
 	void pintar();
 	void borrar();
 	void mover(); 
-	
+	void choque(class JUGADOR &J); 
 };
 void COCHES7::pintar(){ 
 	gotoxy(x,y); printf("   %c%c%c%c",111,45,111,217);
@@ -465,7 +728,45 @@ void COCHES7::mover(){
 
 	pintar();	
 }
-//Funcion clase que controla el coche gato
+void COCHES7::choque(class JUGADOR &J){
+	if(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x=x+2;
+	if(x>140){
+		borrar();
+		y=19;
+		x=2;
+	}	
+}
+	if(x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+	
+	x1=x1+2;
+	if(x1>140){
+		borrar();
+		y=19;
+		x1=2;
+	}	
+}
+	if(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x2=x2+2;
+	if(x2>140){
+		borrar();
+		y=19;
+		x2=2;
+	}
+}
+}
+//Funcion clase que controla el coche gato 1
 class GATO1{
 	int x=10,x1=36,x2=64,x3=101,y;
 		
@@ -473,7 +774,8 @@ public:
 	GATO1(int _x,int _y):x(_x),y(_y){}	
 	void pintar();
 	void borrar();
-	void mover(); 
+	void mover();
+	void choque(class JUGADOR &J); 
 	
 };
 void GATO1::pintar(){ 
@@ -528,6 +830,61 @@ void GATO1::mover(){
 	pintar();	
 }
 
+void GATO1::choque(class JUGADOR &J){
+	if((x+2>=J.X() && x+2<=J.X()+4 && y==J.Y())||(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()+1)){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+		borrar();
+
+	x--;
+	if(x<3){
+		borrar();
+		y=10;
+		x=143;
+	}
+}
+	if((x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y())||(x1+2>=J.X() && x1+2<=J.X()+4  && y==J.Y()+1)){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+		borrar();
+	
+	x1--;
+	if(x1<3){
+		borrar();
+		y=10;
+		x1=143;
+	}	
+}
+	if((x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y())||(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()+1)){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+		borrar();
+
+	x2--;
+	if(x2<3){
+		borrar();
+		y=10;
+		x2=143;
+	}
+}
+	if((x3+2>=J.X() && x3+2<=J.X()+4 && y==J.Y())||(x3+2>=J.X() && x3+2<=J.X()+4 && y==J.Y()+1)){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+		borrar();
+
+	x3--;
+	if(x3<3){
+		borrar();
+		y=10;
+		x3=143;
+	}
+}
+}
+
 
 //Funcion clase que controla el coche 8
 class COCHES8{
@@ -538,6 +895,7 @@ public:
 	void pintar();
 	void borrar();
 	void mover();
+	void choque(class JUGADOR &J);
 };
 void COCHES8::pintar(){
 	gotoxy(x,y); printf("   %c%c%c%c",254,254,45,254);
@@ -573,8 +931,45 @@ void COCHES8::mover(){
 
 	pintar();	
 }
+void COCHES8::choque(class JUGADOR &J){
+	if(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
 
-//Funcion clase que controla el coche gato
+	x++;
+	if(x>141){
+		borrar();
+		y=25;
+		x=3;
+	}
+}
+	if(x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+	
+	x1++;
+	if(x1>141){
+		borrar();
+		y=25;
+		x1=3;
+	}	
+}
+	if(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x2++;
+	if(x2>141){
+		borrar();
+		y=25;
+		x2=3;
+	}
+}
+}
+//Funcion clase que controla el coche gato 2
 class GATO2{
 	int x=8,x1=72,x2=30,y;
 		
@@ -583,7 +978,7 @@ public:
 	void pintar();
 	void borrar();
 	void mover(); 
-	
+	void choque(class JUGADOR &J);
 };
 void GATO2::pintar(){ 
 	gotoxy(x,y); printf("%c%c%c%c ",47,92,47,92);
@@ -625,6 +1020,47 @@ void GATO2::mover(){
 	}	
 	pintar();	
 }
+void GATO2::choque(class JUGADOR &J){
+	if((x+2>=J.X() && x+2<=J.X()+4 && y==J.Y())||(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()+1)){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+		borrar();
+
+	x--;
+	if(x<3){
+		borrar();
+		y=24;
+		x=143;
+	}
+}
+	if((x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y())||(x1+2>=J.X() && x1+2<=J.X()+4  && y==J.Y()+1)){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+		borrar();
+	
+	x1--;
+	if(x1<3){
+		borrar();
+		y=24;
+		x1=143;
+	}	
+}
+	if((x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y())||(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()+1)){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+		borrar();
+
+	x2--;
+	if(x2<3){
+		borrar();
+		y=24;
+		x2=143;
+	}
+}
+}
 
 //Funcion clase que controla el coche 9
 class COCHES9{
@@ -634,14 +1070,15 @@ public:
 	void pintar();
 	void borrar();
 	void mover(); 
+	void choque(class JUGADOR &J);
 	
 };
-void COCHES9::pintar(){ //Funcion para dibujar el coche
+void COCHES9::pintar(){ 
 	gotoxy(x,y); printf("   %c%c%c",254,254,254);
 	gotoxy(x1,y); printf("   %c%c%c",254,254,254);
 	gotoxy(x2,y); printf("   %c%c%c",254,254,254);	
 }
-void COCHES9::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el coche y dar la sensacion de movimiento
+void COCHES9::borrar(){ 
 	gotoxy(x,y); printf ("     ");	
 	gotoxy(x1,y); printf ("     ");	
 	gotoxy(x2,y); printf ("     ");			
@@ -668,6 +1105,44 @@ void COCHES9::mover(){
 	}	
 	pintar();	
 }
+void COCHES9::choque(class JUGADOR &J){
+	if(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x=x+2;
+	if(x>141){
+		borrar();
+		y;
+		x=2;
+	}
+}
+	if(x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+	
+	x1=x1+2;
+	if(x1>141){
+		borrar();
+		y;
+		x1=2;
+	}	
+}
+	if(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x2=x2+2;
+	if(x2>141){
+		borrar();
+		y;
+		x2=2;
+	}
+}
+}
 //Funcion clase que controla el coche 10
  class COCHES10{
 	int x=25,x1=70,x2=120,y=29;
@@ -676,7 +1151,8 @@ public:
 	COCHES10(int _x,int _y):x(_x),y(_y){}	
 	void pintar();
 	void borrar();
-	void mover(); 
+	void mover();
+	void choque(class JUGADOR &J);
 	
 };
 void COCHES10::pintar(){ 
@@ -714,6 +1190,44 @@ void COCHES10::mover(){
 
 	pintar();	
 }
+void COCHES10::choque(class JUGADOR &J){
+	if(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x++;
+	if(x>142){
+		borrar();
+		y;
+		x=2;
+	}
+}
+	if(x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+	
+	x1++;
+	if(x1>142){
+		borrar();
+		y;
+		x1=2;
+	}	
+}
+	if(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x2++;
+	if(x2>142){
+		borrar();
+		y;
+		x2=2;
+	}
+}
+}
 //Funcion clase que controla el coche 11
 class COCHES11{
 	int x=50,x1=80,x2=120,y;
@@ -723,6 +1237,7 @@ public:
 	void pintar();
 	void borrar();
 	void mover(); 
+	void choque(class JUGADOR &J);
 	
 };
 void COCHES11::pintar(){ 
@@ -760,6 +1275,44 @@ void COCHES11::mover(){
 
 	pintar();	
 }
+void COCHES11::choque(class JUGADOR &J){
+	if(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x++;
+	if(x>141){
+		borrar();
+		y=31;
+		x=2;
+	}
+}
+	if(x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y() ){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+	
+	x1++;
+	if(x1>141){
+		borrar();
+		y=31;
+		x1=2;
+	}	
+}
+	if(x2+2>=J.X() && x2+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+
+	x2++;
+	if(x2>141){
+		borrar();
+		y=31;
+		x2=2;
+	}
+}
+}
 //Funcion clase que controla el coche 12
 class COCHES12{
 	int x=94, x1=48,y=21;
@@ -769,6 +1322,7 @@ public:
 	void pintar();
 	void borrar();
 	void mover();
+	void choque(class JUGADOR &J);
 };
 void COCHES12::pintar(){
 	gotoxy(x,y); printf("%c%c%c    ",254,254,254);
@@ -796,7 +1350,33 @@ void COCHES12::mover(){
 }
 	pintar();
 }
+void COCHES12::choque(class JUGADOR &J){
+	if(x+2>=J.X() && x+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
 
+	x--;
+	if(x<4){
+		borrar();
+		y;
+		x=141;
+	}
+}
+	if(x1+2>=J.X() && x1+2<=J.X()+4 && y==J.Y()){
+		J.perder_vidas();
+		J.pintar();
+		J.pintar_vidas();
+	
+	x1--;
+	if(x1<4){
+		borrar();
+		y;
+		x1=141;	
+	}	
+}
+
+}
 class MONEDA{
 	int x,y;
 	
@@ -827,12 +1407,12 @@ void MONEDA::contar_monedas(class JUGADOR &J){
 }
 //Funcion principal, donde se aplican las demas para ejecutar el programa
 int main (void){
-	
 	system("COLOR 02");
 	OcultarCursor(); 
 	pintar_limites();
-	JUGADOR J(75,34,0);
+	JUGADOR J(75,34,3,0);
 	J.pintar();
+	J.pintar_vidas();
 	J.mostrar_monedas();
 	COCHES1 C1(2,2);
 	COCHES2 C2(25,3);
@@ -848,39 +1428,40 @@ int main (void){
 	COCHES12 C12(94,21);
         GATO1 G1(13,10);
         GATO2 G2(8,24);
-	MONEDA M1(75,28);
+        MONEDA M1(75,28);
         MONEDA M2(85,17);
         MONEDA M3(70,6);
+       
 	
+	bool game_over = false;//Creamos una varible lógica 
 	
-	
-	bool game_over = false; //Creamos una varible lógica 
-	while (!game_over) //Para que el juego se repita mientras que la variable game over sea flaso
+	while (!game_over)//Para que el juego se repita mientras que la variable game over sea flaso
 	{
+		
 			J.mover();
-			C1.mover();
-			C2.mover();
-			C3.mover();	
-			C4.mover();
-		        C5.mover();
-		        C6.mover();
-		        C7.mover();
-		        C8.mover();
-		        C9.mover();
-			C10.mover();
-			C11.mover();
-			C12.mover();	
-			G1.mover();	
-			G2.mover();
-		        M1.pintar();
-			M1.contar_monedas(J);
-			M2.pintar();
-			M2.contar_monedas(J);
-			M3.pintar();
-			M3.contar_monedas(J);
+			C1.mover();C1.choque(J);
+			C2.mover();C2.choque(J);
+			C3.mover();C3.choque(J);	
+			C4.mover();C4.choque(J);
+		        C5.mover();C5.choque(J);
+		        C6.mover();C6.choque(J);
+		        C7.mover();C7.choque(J);
+		        C8.mover();C8.choque(J);
+		        C9.mover();C9.choque(J);
+			C10.mover();C10.choque(J);
+			C11.mover();C11.choque(J);
+			C12.mover();C12.choque(J);
+			G1.mover();G1.choque(J);
+			G2.mover();G2.choque(J);
+			M1.pintar();M1.contar_monedas(J);
+			M2.pintar();M2.contar_monedas(J);
+			M3.pintar();M3.contar_monedas(J);			
 			Sleep(30);
-	}
-	
-	
+			
+
+
+}
+
+	system("PAUSE");
 	return 0;
 }
