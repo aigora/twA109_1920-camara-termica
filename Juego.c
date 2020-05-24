@@ -1415,7 +1415,6 @@ int main (void){
 	J.pintar();
 	J.pintar_vidas();
 	J.mostrar_monedas();
-	J.contar_tiempo();
 	COCHES1 C1(2,2);
 	COCHES2 C2(25,3);
 	COCHES3 C3(50,7);
@@ -1441,6 +1440,7 @@ int main (void){
 	{
 		
 			J.mover();
+		        J.contar_tiempo();
 			C1.mover();C1.choque(J);
 			C2.mover();C2.choque(J);
 			C3.mover();C3.choque(J);	
