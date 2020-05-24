@@ -88,6 +88,7 @@ public:
 	JUGADOR(int _x,int _y,int _vidas,int _monedas):x(_x),y(_y),vidas(_vidas),monedas(_monedas){}
 	int X(){return x;}
 	int Y(){return y;}
+	int money(){return monedas;}
 	void pintar();
 	void borrar();
 	void mover(); 
@@ -1411,6 +1412,9 @@ int main (void){
 	system("COLOR 02");
 	OcultarCursor(); 
 	pintar_limites();
+	FILE *fichero;
+	int vector[1];
+	int cierre,i;
 	JUGADOR J(75,34,3,0);
 	J.pintar();
 	J.pintar_vidas();
@@ -1459,6 +1463,16 @@ int main (void){
 			M2.pintar();M2.contar_monedas(J);
 			M3.pintar();M3.contar_monedas(J);			
 			Sleep(30);
+	vector[0]=J.money();
+	fichero=fopen("Resultados.txt","wt"); 
+	if(fichero==NULL)
+	  printf("Error");
+	else
+	{
+			fprintf(fichero,"Monedas recogidas : %d",vector[0]);
+			fclose(fichero);
+    }
+		
 			
 
 
