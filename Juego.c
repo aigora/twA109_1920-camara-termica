@@ -34,17 +34,6 @@ void gotoxy(int x,int y){
 	SetConsoleCursorInfo(hCon,&cci);
  	
  }
- //Funcion para contar el tiempo
- void tiempo(){
- 	int min,sec,x=1000;
-	
-	for(min=0;min<60;min++){
-			for(sec=0;sec<60;sec++){
-				gotoxy(158,7);printf("%02i:%02i\r",min,sec);
-				Sleep(x);
-			}
-		}
-	}
 //Funcion para dibujar los limites del juego
 void pintar_limites(){
 	int i;
@@ -106,7 +95,8 @@ public:
 	void perder_vidas();
 	void mostrar_monedas();
 	void sumar_monedas(){monedas++;}
-};
+	void contar_tiempo();
+;};
 
 void JUGADOR::pintar(){ //Funcion para dibujar al jugador
 	gotoxy(x,y); printf("  %c%c%c",62,229,60);
@@ -191,7 +181,18 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
  	gotoxy(150,9);
  	printf("Monedas: %d",monedas);
  } 
- 
+ void JUGADOR::contar_tiempo(){
+ 	int min,sec,x=1000;
+	
+	for(min=0;min<60;min++){
+			for(sec=0;sec<60;sec++)
+			{
+				gotoxy(150,7);printf("Tiempo: %02i:%02i\r",min,sec);
+			}
+		}
+ 	
+ }
+
  //Funcion clase que controla el coche 1
  class COCHES1{
 	int x,x1=47,x2=94,y;		
@@ -1414,6 +1415,7 @@ int main (void){
 	J.pintar();
 	J.pintar_vidas();
 	J.mostrar_monedas();
+	J.contar_tiempo();
 	COCHES1 C1(2,2);
 	COCHES2 C2(25,3);
 	COCHES3 C3(50,7);
