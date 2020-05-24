@@ -1385,7 +1385,7 @@ int main (void){
 	system("COLOR 02");
 	OcultarCursor(); 
 	pintar_limites();
-	JUGADOR J(75,34,3,0);
+	JUGADOR J(75,34,5,0);
 	J.pintar();
 	J.pintar_vidas();
 	J.mostrar_monedas();
