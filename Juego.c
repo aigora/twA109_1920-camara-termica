@@ -3,12 +3,12 @@
 #include <stdlib.h> 
 #include <windows.h> 
 #include <time.h>
-#include<conio.h >
+#include <conio.h >
 #define ARRIBA 72
 #define IZQUIERDA 75
 #define DERECHA 77
 #define ABAJO 80 
- 
+#include <ctime>
 
 
 // Funcion para situarse en algun punto del plano
@@ -34,6 +34,17 @@ void gotoxy(int x,int y){
 	SetConsoleCursorInfo(hCon,&cci);
  	
  }
+ //Funcion para contar el tiempo
+ void tiempo(){
+ 	int min,sec,x=1000;
+	
+	for(min=0;min<60;min++){
+			for(sec=0;sec<60;sec++){
+				gotoxy(158,7);printf("%02i:%02i\r",min,sec);
+				Sleep(x);
+			}
+		}
+	}
 //Funcion para dibujar los limites del juego
 void pintar_limites(){
 	int i;
@@ -73,9 +84,9 @@ void pintar_limites(){
 	gotoxy(74,17);printf("SAFE ZONE");
 	gotoxy(150,1);printf("CROSS THE ROAD!");
 	gotoxy(150,3);printf("Vidas:");
-	gotoxy(150,5);printf("Puntos:");
 	gotoxy(150,7);printf("Tiempo:");
 	gotoxy(150,9);printf("Monedas:");
+	
 	   
 }
 
@@ -112,6 +123,9 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 
  void JUGADOR::mover(){ //Funcion para mover al jugador
  int i;
+ int puntos=0;
+ 
+
  		if(kbhit()){
 				char tecla = getch();
 				borrar();
@@ -137,9 +151,12 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 				if(tecla==ABAJO && y==30 )y++;
 				if(tecla==ARRIBA&& y==1){
 					gotoxy(74,17);printf("HAS GANADO!!!");
-						_getch();
-						exit(1);
+					_getch();
+					exit(1);
+					
+
 				}
+			
 				pintar();
 				
 			}
@@ -156,10 +173,9 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 
  	if(vidas==1){
  		system("cls");
- 		gotoxy(63, 18);
-		printf("Game Over :( \n");
+ 		gotoxy(75,17);
+		printf("GAME OVER :( \n");
 		_getch();
-		system("PAUSE");
 		exit(1);
 	 }
 	 else{
@@ -1415,8 +1431,10 @@ int main (void){
         MONEDA M1(75,28);
         MONEDA M2(85,17);
         MONEDA M3(70,6);
+       
 	
 	bool game_over = false;//Creamos una varible lógica 
+	
 	while (!game_over)//Para que el juego se repita mientras que la variable game over sea flaso
 	{
 		
@@ -1443,6 +1461,7 @@ int main (void){
 
 
 }
+
 	system("PAUSE");
 	return 0;
 }
