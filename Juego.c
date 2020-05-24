@@ -89,6 +89,7 @@ public:
 	int X(){return x;}
 	int Y(){return y;}
 	int money(){return monedas;}
+	int lifes(){return vidas;}
 	void pintar();
 	void borrar();
 	void mover(); 
@@ -1463,13 +1464,14 @@ int main (void){
 			M2.pintar();M2.contar_monedas(J);
 			M3.pintar();M3.contar_monedas(J);			
 			Sleep(30);
-	vector[0]=J.money();
+	        vector[0]=J.money();
+		vector[1]=J.lifes()-1;
 	fichero=fopen("Resultados.txt","wt"); 
 	if(fichero==NULL)
 	  printf("Error");
 	else
 	{
-			fprintf(fichero,"Monedas recogidas : %d",vector[0]);
+			fprintf(fichero,"Monedas recogidas : %d \nVidas no utilizadas: %d",vector[0],vector[1]);
 			fclose(fichero);
     }
 		
