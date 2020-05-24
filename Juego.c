@@ -135,6 +135,11 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 				if(tecla==ABAJO && y==26 )y++;
 				if(tecla==ARRIBA && y==30 )y--;
 				if(tecla==ABAJO && y==30 )y++;
+				if(tecla==ARRIBA&& y==1){
+					gotoxy(74,17);printf("HAS GANADO!!!");
+						_getch();
+						exit(1);
+				}
 				pintar();
 				
 			}
@@ -152,8 +157,10 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
  	if(vidas==1){
  		system("cls");
  		gotoxy(63, 18);
-		printf("Game Over :(");
+		printf("Game Over :( \n");
 		_getch();
+		system("PAUSE");
+		exit(1);
 	 }
 	 else{
  	vidas--;
@@ -163,10 +170,12 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
 
  }
  }
+ 
  void JUGADOR::mostrar_monedas(){
  	gotoxy(150,9);
  	printf("Monedas: %d",monedas);
  } 
+ 
  //Funcion clase que controla el coche 1
  class COCHES1{
 	int x,x1=47,x2=94,y;		
@@ -1385,7 +1394,7 @@ int main (void){
 	system("COLOR 02");
 	OcultarCursor(); 
 	pintar_limites();
-	JUGADOR J(75,34,5,0);
+	JUGADOR J(75,34,3,0);
 	J.pintar();
 	J.pintar_vidas();
 	J.mostrar_monedas();
@@ -1434,6 +1443,6 @@ int main (void){
 
 
 }
-
+	system("PAUSE");
 	return 0;
 }
