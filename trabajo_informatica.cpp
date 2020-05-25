@@ -74,9 +74,6 @@ void pintar_limites(){
 	gotoxy(74,17);printf("SAFE ZONE");
 	gotoxy(150,1);printf("CROSS THE ROAD!");
 	gotoxy(150,3);printf("Vidas:");
-	gotoxy(150,5);printf("Puntos:");
-	
-	gotoxy(150,9);printf("Monedas:");
 	   
 }
 
@@ -178,7 +175,7 @@ void JUGADOR::borrar(){ //Funcion para borrar el ultimo lugar donde estaba el ju
  }
  
  void JUGADOR::mostrar_monedas(){
- 	gotoxy(150,9);
+ 	gotoxy(150,5);
  	printf("Monedas: %d",monedas);
  } 
  
@@ -1431,11 +1428,13 @@ int main (void){
 	COCHES10 C10(25,29);
 	COCHES11 C11(50,31);
 	COCHES12 C12(94,21);
-        GATO1 G1(13,10);
-        GATO2 G2(8,24);
-        MONEDA M1(75,28);
-        MONEDA M2(85,17);
-        MONEDA M3(70,6);
+    GATO1 G1(13,10);
+    GATO2 G2(8,24);
+    MONEDA M1(75,28);
+    MONEDA M2(85,17);
+    MONEDA M3(70,6);
+    MONEDA M4(70,15);
+    MONEDA M5(76,20);
     
 	
 //Creamos una varible lógica 
@@ -1459,7 +1458,9 @@ int main (void){
 			G2.mover();G2.choque(J);
 			M1.pintar();M1.contar_monedas(J);
 			M2.pintar();M2.contar_monedas(J);
-			M3.pintar();M3.contar_monedas(J);			
+			M3.pintar();M3.contar_monedas(J);	
+			M4.pintar(); M4.contar_monedas(J);	
+			M5.pintar(); M5.contar_monedas(J);
 			Sleep(30);
 			
 			vector[0]=J.money();
