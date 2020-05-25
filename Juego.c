@@ -1445,7 +1445,7 @@ int main (void){
 	{
 		
 			J.mover();
-		        J.contar_tiempo();
+		       // J.contar_tiempo();
 			C1.mover();C1.choque(J);
 			C2.mover();C2.choque(J);
 			C3.mover();C3.choque(J);	
