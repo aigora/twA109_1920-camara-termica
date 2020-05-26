@@ -1,5 +1,5 @@
 # Título del trabajo
-Cross the Road
+Cross the Road (El archivo correcto que hay que descragar es el de trabajo de infómatica, ya que el otro archivo esta en c.)
 
 ## Integrantes del equipo
 Ismael Torrijano Pedroche,  Iris Martínez Pérez,  Irene Valdés Miguel
